@@ -489,6 +489,22 @@
             100% { transform: scaleY(0); transform-origin: bottom; }
         }
 
+        /* ── Roadmap Clickable Items ─────────────── */
+        .tl-item-clickable { cursor: none; }
+        .tl-dot { transition: background .2s, box-shadow .2s; }
+        .tl-title { transition: color .2s; }
+        .tl-item-clickable:hover .tl-dot {
+            background: rgba(0,200,255,.14);
+            box-shadow: 0 0 32px rgba(0,200,255,.8);
+        }
+        .tl-item-clickable:hover .tl-title { color: var(--accent); }
+        .tl-item-clickable .tl-title::after {
+            content: ' \2192';
+            color: var(--accent); opacity: 0;
+            transition: opacity .2s;
+        }
+        .tl-item-clickable:hover .tl-title::after { opacity: 1; }
+
         /* ── Concept Modals ──────────────────────── */
         .card-clickable { cursor: none; }
         .card-clickable::after {
@@ -1220,23 +1236,23 @@
 
                 <div class="timeline">
                     <!--✏️ EDIT: Add/remove/modify timeline items -->
-                    <div class="tl-item">
+                    <div class="tl-item tl-item-clickable" data-guide="android-studio">
                         <div class="tl-dot">01</div>
                         <div class="tl-content">
-                            <div class="tl-title">Java & Android Studio</div>
+                            <div class="tl-title">Java &amp; Android Studio</div>
                             <p class="tl-text">Set up your IDE, learn basic OOP, understand the FTC SDK structure and OpMode lifecycle.</p>
                         </div>
                     </div>
 
-                    <div class="tl-item">
+                    <div class="tl-item tl-item-clickable" data-guide="hardware-teleop">
                         <div class="tl-dot">02</div>
                         <div class="tl-content">
-                            <div class="tl-title">Hardware & TeleOp</div>
+                            <div class="tl-title">Hardware &amp; TeleOp</div>
                             <p class="tl-text">Configure motors and servos, map gamepad inputs, and drive your robot for the first time.</p>
                         </div>
                     </div>
 
-                    <div class="tl-item">
+                    <div class="tl-item tl-item-clickable" data-guide="subsystems">
                         <div class="tl-dot">03</div>
                         <div class="tl-content">
                             <div class="tl-title">Subsystem Architecture</div>
@@ -1244,19 +1260,19 @@
                         </div>
                     </div>
 
-                    <div class="tl-item">
+                    <div class="tl-item tl-item-clickable" data-guide="pid-statemachines">
                         <div class="tl-dot">04</div>
                         <div class="tl-content">
-                            <div class="tl-title">PID & State Machines</div>
+                            <div class="tl-title">PID &amp; State Machines</div>
                             <p class="tl-text">Add closed-loop control for consistency. Use state machines for autonomous sequencing.</p>
                         </div>
                     </div>
 
-                    <div class="tl-item">
+                    <div class="tl-item tl-item-clickable" data-guide="path-following">
                         <div class="tl-dot">05</div>
                         <div class="tl-content">
                             <div class="tl-title">Path Following</div>
-                            <p class="tl-text">Integrate RoadRunner or Pedro Pathing for smooth, repeatable autonomous trajectories.</p>
+                            <p class="tl-text">Integrate Pedro Pathing for smooth, repeatable autonomous trajectories.</p>
                         </div>
                     </div>
                     <!--✏️ END timeline -->
@@ -2037,6 +2053,634 @@ motor.<span class="fn">setPower</span>(<span class="ty">Math</span>.<span class=
             btn.classList.add('active');
             const pane = this.querySelector('#modal-' + tab);
             if (pane) pane.classList.add('active');
+        });
+    })();
+
+    /* ═══════════════════════════════════════════
+       ROADMAP GUIDE PAGES — opens in new tab
+    ═══════════════════════════════════════════ */
+    (function () {
+        const GCSS = `
+:root{--bg:#040d1a;--panel:#070f20;--border:rgba(0,200,255,.18);--accent:#00c8ff;--accent2:#7b2fff;--accent3:#00ffc3;--text:#c8e6f5;--muted:#4a7a9b;--glow:0 0 18px rgba(0,200,255,.5);--font-head:'Orbitron',monospace;--font-body:'Rajdhani',sans-serif;--font-code:'Share Tech Mono',monospace}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:var(--font-body);font-size:17px;line-height:1.7}
+body::before{content:'';position:fixed;inset:0;z-index:-1;background-image:linear-gradient(rgba(0,200,255,.04) 1px,transparent 1px),linear-gradient(90deg,rgba(0,200,255,.04) 1px,transparent 1px);background-size:60px 60px;pointer-events:none}
+body::after{content:'';position:fixed;inset:0;z-index:-1;background:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(0,0,0,.05) 2px,rgba(0,0,0,.05) 4px);pointer-events:none}
+.g-nav{position:sticky;top:0;display:flex;align-items:center;gap:18px;padding:0 40px;height:62px;background:rgba(4,13,26,.88);backdrop-filter:blur(16px);border-bottom:1px solid var(--border);z-index:10}
+.g-back{font-family:var(--font-code);font-size:.8rem;letter-spacing:1px;color:var(--muted);text-decoration:none;transition:color .2s;border:1px solid var(--border);padding:5px 14px;border-radius:3px}
+.g-back:hover{color:var(--accent);border-color:var(--accent)}
+.g-logo{font-family:var(--font-head);font-size:.95rem;color:var(--accent);text-shadow:var(--glow);letter-spacing:2px}
+.g-label{font-family:var(--font-code);font-size:.7rem;color:var(--accent3);letter-spacing:3px;margin-left:auto}
+.g-main{max-width:820px;margin:0 auto;padding:64px 28px 110px}
+.g-eyebrow{font-family:var(--font-code);font-size:.72rem;letter-spacing:4px;color:var(--accent3);text-transform:uppercase;margin-bottom:12px}
+.g-title{font-family:var(--font-head);font-size:clamp(1.9rem,4.5vw,3.2rem);font-weight:900;color:#fff;line-height:1.08;margin-bottom:20px}
+.g-title span{background:linear-gradient(90deg,var(--accent),var(--accent2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.g-intro{color:var(--muted);font-size:1.08rem;line-height:1.85;margin-bottom:48px;padding-bottom:32px;border-bottom:1px solid var(--border)}
+.g-divider{width:60px;height:2px;background:linear-gradient(90deg,var(--accent),transparent);margin:14px 0 32px}
+.g-step{display:grid;grid-template-columns:54px 1fr;gap:0 22px;margin-bottom:52px;position:relative}
+.g-step:not(:last-child)::after{content:'';position:absolute;left:26px;top:54px;bottom:-52px;width:1px;background:var(--border)}
+.g-step-num{width:54px;height:54px;border-radius:50%;border:2px solid var(--accent);background:var(--bg);display:flex;align-items:center;justify-content:center;font-family:var(--font-head);font-size:.7rem;color:var(--accent);box-shadow:var(--glow);flex-shrink:0;z-index:1;margin-top:2px}
+.g-step-title{font-family:var(--font-head);font-size:1.02rem;color:#fff;margin-bottom:14px;margin-top:14px;letter-spacing:1px}
+.g-step-body p{color:var(--muted);margin-bottom:14px;font-size:1rem;line-height:1.78}
+.g-step-body strong{color:var(--text)}
+.g-step-body ul,.g-step-body ol{color:var(--muted);padding-left:22px;margin-bottom:14px;font-size:1rem;line-height:1.78}
+.g-step-body li{margin-bottom:7px}
+.g-step-body li strong{color:var(--text)}
+.g-platform-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:18px 0}
+.g-platform{background:var(--panel);border:1px solid var(--border);border-radius:6px;padding:20px}
+.g-platform-head{font-family:var(--font-head);font-size:.72rem;letter-spacing:2px;color:var(--accent);margin-bottom:14px;padding-bottom:10px;border-bottom:1px solid var(--border);text-transform:uppercase}
+.g-platform ol,.g-platform ul{color:var(--muted);padding-left:18px;font-size:.95rem;line-height:1.78}
+.g-platform li{margin-bottom:7px}
+.g-platform p{color:var(--muted);font-size:.9rem;margin-top:12px;margin-bottom:4px}
+.g-code{background:#020810;border:1px solid var(--border);border-radius:6px;padding:18px 22px;overflow-x:auto;margin:14px 0}
+.g-code pre{font-family:var(--font-code);font-size:.84rem;line-height:1.78;color:var(--accent3);white-space:pre}
+code{font-family:var(--font-code);font-size:.84rem;color:var(--accent3);background:rgba(0,200,255,.08);padding:1px 6px;border-radius:2px}
+.g-note{background:rgba(0,200,255,.06);border-left:3px solid var(--accent);border-radius:0 4px 4px 0;padding:14px 18px;margin:16px 0;font-size:.98rem;color:var(--text);line-height:1.7}
+.g-note strong{color:var(--accent)}
+.g-warn{background:rgba(123,47,255,.08);border-left:3px solid var(--accent2);border-radius:0 4px 4px 0;padding:14px 18px;margin:16px 0;font-size:.98rem;color:var(--text);line-height:1.7}
+.g-warn strong{color:#c084fc}
+.g-table-wrap{overflow-x:auto;margin:18px 0}
+.g-table{width:100%;border-collapse:collapse;font-family:var(--font-body);font-size:.95rem}
+.g-table th{font-family:var(--font-head);font-size:.68rem;letter-spacing:2px;color:var(--accent);text-align:left;padding:10px 14px;border-bottom:2px solid var(--border);text-transform:uppercase}
+.g-table td{padding:13px 14px;border-bottom:1px solid var(--border);color:var(--muted);vertical-align:top}
+.g-table tr:last-child td{border-bottom:none}
+.g-table td:first-child{color:var(--text);font-weight:600}
+.g-section-head{font-family:var(--font-code);font-size:.72rem;letter-spacing:3px;color:var(--accent3);text-transform:uppercase;margin:30px 0 14px}
+@media(max-width:650px){.g-platform-grid{grid-template-columns:1fr}.g-nav{padding:0 16px}.g-main{padding:40px 16px 80px}.g-step{grid-template-columns:44px 1fr}}
+        `;
+
+        function page(label, title, body) {
+            return '<!DOCTYPE html><html lang="en"><head>' +
+                '<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">' +
+                '<title>' + title + ' \u2014 FTC.DEV<\/title>' +
+                '<link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Rajdhani:wght@300;400;500;600;700&family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">' +
+                '<style>' + GCSS + '<\/style><\/head><body>' +
+                '<nav class="g-nav"><a class="g-back" href="javascript:window.close()">\u2190 Back<\/a>' +
+                '<span class="g-logo">FTC.DEV<\/span><span class="g-label">' + label + '<\/span><\/nav>' +
+                '<main class="g-main">' + body + '<\/main><\/body><\/html>';
+        }
+
+        /* ─── Guide 1: Java & Android Studio ─── */
+        const G_ANDROID = `
+<p class="g-eyebrow">// Java &amp; Android Studio</p>
+<h1 class="g-title">Wireless <span>ADB Setup</span> for FTC</h1>
+<p class="g-intro">Configure Android Studio to wirelessly deploy and debug code on your FTC robot using <strong>ADB (Android Debug Bridge)</strong>. Once set up, you can push OpModes and view logs over Wi-Fi — no USB cable needed during development.</p>
+<div class="g-divider"></div>
+
+<div class="g-step">
+<div class="g-step-num">01</div>
+<div class="g-step-body">
+<div class="g-step-title">Download &amp; Install Android Studio</div>
+<p>Visit <strong>developer.android.com/studio</strong> and download the latest stable release for your OS. Run the installer and follow all default prompts to completion.</p>
+<div class="g-note"><strong>Note:</strong> On first launch, Android Studio downloads additional SDK components automatically. Stay connected to the internet and let it finish before continuing.</div>
+</div>
+</div>
+
+<div class="g-step">
+<div class="g-step-num">02</div>
+<div class="g-step-body">
+<div class="g-step-title">Configure the Android SDK</div>
+<p>Open Settings with the shortcut for your OS:</p>
+<div class="g-platform-grid">
+<div class="g-platform">
+<div class="g-platform-head">&#127959; Windows</div>
+<ol><li>Press <strong>Ctrl + Alt + S</strong></li><li>Or: <strong>File &rarr; Settings</strong></li></ol>
+</div>
+<div class="g-platform">
+<div class="g-platform-head">&#63743; macOS</div>
+<ol><li>Press <strong>Cmd + ,</strong> (comma)</li><li>Or: <strong>Android Studio &rarr; Settings</strong></li></ol>
+</div>
+</div>
+<p>Navigate to <strong>Languages &amp; Frameworks &rarr; Android SDK</strong>. Under the <strong>SDK Platforms</strong> tab, check:</p>
+<ul><li><strong>Android 14.0</strong> &mdash; &ldquo;UpsideDownCake&rdquo;</li><li><strong>Android 13.0</strong> &mdash; &ldquo;Tiramisu&rdquo;</li></ul>
+<p>Click <strong>Apply</strong> (bottom-right) and wait for installation to finish.</p>
+</div>
+</div>
+
+<div class="g-step">
+<div class="g-step-num">03</div>
+<div class="g-step-body">
+<div class="g-step-title">Find Your Platform-Tools Directory</div>
+<p>You need the full path to the folder containing the <code>adb</code> executable. It differs by OS:</p>
+<div class="g-platform-grid">
+<div class="g-platform">
+<div class="g-platform-head">&#127959; Windows</div>
+<ol>
+<li>Press <strong>Win + R</strong>, type <code>%AppData%</code>, hit Enter</li>
+<li>Step <em>out</em> of <code>Roaming</code>, enter <code>Local</code></li>
+<li>Navigate to <code>Android &rarr; Sdk &rarr; platform-tools</code></li>
+<li>Click the address bar to copy the full path</li>
+</ol>
+<p>Working directory:</p>
+<div class="g-code"><pre>C:\Users\&lt;Name&gt;\AppData\Local\Android\Sdk\platform-tools</pre></div>
+<p>ADB executable (append to above):</p>
+<div class="g-code"><pre>\adb.exe</pre></div>
+</div>
+<div class="g-platform">
+<div class="g-platform-head">&#63743; macOS</div>
+<ol>
+<li>Open Spotlight: <strong>Cmd + Space</strong></li>
+<li>Type <code>~/Library</code> and open it</li>
+<li>Navigate to <code>Android &rarr; sdk</code></li>
+<li>Right-click <code>platform-tools</code>, hold <strong>&#8997; Option</strong>, choose <strong>&ldquo;Copy as Pathname&rdquo;</strong></li>
+</ol>
+<p>Working directory:</p>
+<div class="g-code"><pre>/Users/&lt;Name&gt;/Library/Android/sdk/platform-tools</pre></div>
+<p>ADB executable (append to above):</p>
+<div class="g-code"><pre>/adb</pre></div>
+</div>
+</div>
+</div>
+</div>
+
+<div class="g-step">
+<div class="g-step-num">04</div>
+<div class="g-step-body">
+<div class="g-step-title">Add External Tools in Android Studio</div>
+<p>In Settings, go to <strong>Tools &rarr; External Tools</strong>. Click the <strong>+</strong> button to add a new tool. For each of the three tools below, set the <strong>Program</strong> field to your ADB executable path and <strong>Working Directory</strong> to your platform-tools folder from Step 3.</p>
+<div class="g-note"><strong>Always enable</strong> both &ldquo;Synchronize files after execution&rdquo; and &ldquo;Open console for tool output&rdquo; under <strong>Advanced Options</strong> for each tool.</div>
+<div class="g-table-wrap">
+<table class="g-table">
+<thead><tr><th>Tool Name</th><th>Description</th><th>Arguments</th></tr></thead>
+<tbody>
+<tr><td>FTC Connect</td><td>Connect ADB to FTC Robot over Wi-Fi</td><td><code>connect 192.168.43.1:5555</code></td></tr>
+<tr><td>ADB Devices</td><td>List all connected ADB devices</td><td><code>devices</code></td></tr>
+<tr><td>ADB Disconnect</td><td>Disconnect all ADB connections</td><td><code>disconnect</code></td></tr>
+</tbody>
+</table>
+</div>
+<div class="g-note"><strong>Usage:</strong> Access these via <strong>Tools &rarr; External Tools</strong> in the menu. Ensure your laptop is on the <strong>same Wi-Fi network as the Robot Controller hotspot</strong> before running FTC Connect.</div>
+</div>
+</div>`;
+
+        /* ─── Guide 2: Hardware & TeleOp ─── */
+        const G_HARDWARE = `
+<p class="g-eyebrow">// Hardware &amp; TeleOp</p>
+<h1 class="g-title">Hardware Config &amp; <span>TeleOp</span> Basics</h1>
+<p class="g-intro">Learn to configure your robot's hardware in the FTC Robot Controller app, map every device in Java code, and write a TeleOp OpMode that responds to gamepad input in real time.</p>
+<div class="g-divider"></div>
+
+<div class="g-step">
+<div class="g-step-num">01</div>
+<div class="g-step-body">
+<div class="g-step-title">Create a Hardware Configuration File</div>
+<p>On the <strong>Driver Station</strong> (or Robot Controller) app, tap the three-bar menu and select <strong>Configure Robot</strong>. Create a new configuration and add every physical device connected to your Control Hub or Expansion Hub — naming each one exactly as you plan to reference it in code.</p>
+<div class="g-note"><strong>Naming matters:</strong> The name you give a device in the config file must exactly match the string passed to <code>HardwareMap.get()</code> in Java — capitalization and spaces included.</div>
+</div>
+</div>
+
+<div class="g-step">
+<div class="g-step-num">02</div>
+<div class="g-step-body">
+<div class="g-step-title">Map Hardware Devices in Java</div>
+<p>In your subsystem constructor, retrieve each device from the <code>HardwareMap</code> object and apply the correct configuration:</p>
+<div class="g-code"><pre>public MySubsystem(HardwareMap hw, Telemetry telemetry) {
+    // Motors — name must match config file exactly
+    liftMotor  = hw.get(DcMotorEx.class,      "liftMotor");
+    driveLeft  = hw.get(DcMotorEx.class,      "leftDrive");
+
+    // Servos
+    clawServo  = hw.get(Servo.class,          "claw");
+
+    // Sensors
+    distSensor = hw.get(DistanceSensor.class, "intakeSensor");
+    colorSensor= hw.get(RevColorSensorV3.class,"distSensor");
+
+    // Motor configuration
+    liftMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+    liftMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+    liftMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+    liftMotor.setDirection(DcMotorSimple.Direction.FORWARD);
+
+    // Servo initial position: 0.0 = min, 1.0 = max
+    clawServo.setPosition(0.5);
+}</pre></div>
+</div>
+</div>
+
+<div class="g-step">
+<div class="g-step-num">03</div>
+<div class="g-step-body">
+<div class="g-step-title">Write Your First TeleOp</div>
+<p>Extend <code>OpMode</code> (iterative), initialize your subsystems in <code>init()</code>, and drive motors from <code>loop()</code>:</p>
+<div class="g-code"><pre>@TeleOp(name = "My TeleOp", group = "Main")
+public class MyTeleOp extends OpMode {
+    private Drivetrain drive;
+    private MySubsystem subsystem;
+
+    @Override
+    public void init() {
+        drive     = new Drivetrain(hardwareMap, telemetry);
+        subsystem = new MySubsystem(hardwareMap, telemetry);
+        drive.init();
+        subsystem.init();
+    }
+
+    @Override
+    public void loop() {
+        drive.updateCtrls(gamepad1, gamepad2);
+        subsystem.updateCtrls(gamepad1, gamepad2);
+        subsystem.update();
+        telemetry.update();
+    }
+}</pre></div>
+</div>
+</div>
+
+<div class="g-step">
+<div class="g-step-num">04</div>
+<div class="g-step-body">
+<div class="g-step-title">Gamepad Input Reference</div>
+<p>The FTC SDK exposes every button and axis on the gamepad. Key inputs to know:</p>
+<div class="g-table-wrap">
+<table class="g-table">
+<thead><tr><th>Input</th><th>Type</th><th>Range / Values</th></tr></thead>
+<tbody>
+<tr><td><code>left_stick_y</code> / <code>right_stick_y</code></td><td>double</td><td>&minus;1.0 (up) &rarr; 1.0 (down)</td></tr>
+<tr><td><code>left_stick_x</code> / <code>right_stick_x</code></td><td>double</td><td>&minus;1.0 (left) &rarr; 1.0 (right)</td></tr>
+<tr><td><code>left_trigger</code> / <code>right_trigger</code></td><td>double</td><td>0.0 (idle) &rarr; 1.0 (full press)</td></tr>
+<tr><td><code>a</code>, <code>b</code>, <code>x</code>, <code>y</code></td><td>boolean</td><td>true while held</td></tr>
+<tr><td><code>aWasPressed()</code> / <code>aWasReleased()</code></td><td>boolean</td><td>true for one loop on edge</td></tr>
+<tr><td><code>dpadUp</code>, <code>dpadDown</code></td><td>boolean</td><td>true while held</td></tr>
+</tbody>
+</table>
+</div>
+<div class="g-warn"><strong>Tip:</strong> Use <strong>WasPressed</strong> / <strong>WasReleased</strong> instead of raw booleans for toggle logic — they fire exactly once per button edge, preventing repeated triggers from a single press.</div>
+</div>
+</div>`;
+
+        /* ─── Guide 3: Subsystem Architecture ─── */
+        const G_SUBSYSTEMS = `
+<p class="g-eyebrow">// Subsystem Architecture</p>
+<h1 class="g-title">Clean <span>Subsystem</span> Architecture</h1>
+<p class="g-intro">Subsystems separate <strong>hardware control</strong> from <strong>OpMode logic</strong>. Each physical mechanism (intake, lift, drivetrain) lives in its own class with a predictable interface — making code reusable, testable, and easy to debug during competition.</p>
+<div class="g-divider"></div>
+
+<div class="g-step">
+<div class="g-step-num">01</div>
+<div class="g-step-body">
+<div class="g-step-title">Define a Subsystem Interface</div>
+<p>Create a shared interface that every subsystem implements. This enforces a consistent pattern across your whole codebase:</p>
+<div class="g-code"><pre>// Subsystem.java
+public interface Subsystem {
+    void init();                              // Run once on OpMode init
+    void update();                            // Run every loop — hardware output
+    void updateCtrls(Gamepad gp1, Gamepad gp2); // Process gamepad input
+}</pre></div>
+<div class="g-note"><strong>Why an interface?</strong> Your OpMode can store all subsystems in a list and call <code>update()</code> on each without caring about implementation details.</div>
+</div>
+</div>
+
+<div class="g-step">
+<div class="g-step-num">02</div>
+<div class="g-step-body">
+<div class="g-step-title">Build a Subsystem Class</div>
+<p>Each subsystem owns its hardware devices, exposes state-transition methods, and drives hardware only inside <code>update()</code>:</p>
+<div class="g-code"><pre>public class LiftSubsystem implements Subsystem {
+    private DcMotorEx motor;
+    private PIDController pid;
+
+    public enum LiftState { GROUND, LOW, HIGH, IDLE }
+    private LiftState state = LiftState.IDLE;
+
+    public LiftSubsystem(HardwareMap hw, Telemetry tel) {
+        motor = hw.get(DcMotorEx.class, "liftMotor");
+        motor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        motor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        motor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        pid = new PIDController(0.008, 0.0, 0.0004);
+    }
+
+    public void goHigh()   { state = LiftState.HIGH; }
+    public void goGround() { state = LiftState.GROUND; }
+
+    @Override
+    public void update() {
+        int target = switch (state) {
+            case GROUND -> 0;
+            case LOW    -> 480;
+            case HIGH   -> 1350;
+            default     -> motor.getCurrentPosition();
+        };
+        pid.setSetPoint(target);
+        motor.setPower(MathUtils.clamp(pid.calculate(motor.getCurrentPosition()), -1, 1));
+    }
+
+    @Override
+    public void updateCtrls(Gamepad gp1, Gamepad gp2) {
+        if (gp2.aWasPressed()) goHigh();
+        if (gp2.bWasPressed()) goGround();
+    }
+
+    @Override public void init() {}
+}</pre></div>
+</div>
+</div>
+
+<div class="g-step">
+<div class="g-step-num">03</div>
+<div class="g-step-body">
+<div class="g-step-title">Wire Subsystems Into an OpMode</div>
+<p>The OpMode becomes a thin coordinator — it creates subsystems, calls their methods, and nothing more:</p>
+<div class="g-code"><pre>@TeleOp(name = "Competition TeleOp", group = "Main")
+public class CompTeleOp extends OpMode {
+    private final List&lt;Subsystem&gt; subsystems = new ArrayList&lt;&gt;();
+    private Drivetrain drive;
+    private LiftSubsystem lift;
+    private Intaker intaker;
+
+    @Override
+    public void init() {
+        drive   = new Drivetrain(hardwareMap, telemetry);
+        lift    = new LiftSubsystem(hardwareMap, telemetry);
+        intaker = new Intaker(hardwareMap, telemetry);
+
+        subsystems.add(drive);
+        subsystems.add(lift);
+        subsystems.add(intaker);
+
+        subsystems.forEach(Subsystem::init);
+    }
+
+    @Override
+    public void loop() {
+        subsystems.forEach(s -&gt; {
+            s.updateCtrls(gamepad1, gamepad2);
+            s.update();
+        });
+        telemetry.update();
+    }
+}</pre></div>
+<div class="g-note"><strong>Key benefit:</strong> Adding a new mechanism means writing one new subsystem class — the OpMode loop stays identical.</div>
+</div>
+</div>
+
+<div class="g-step">
+<div class="g-step-num">04</div>
+<div class="g-step-body">
+<div class="g-step-title">Subsystem Best Practices</div>
+<ul>
+<li><strong>Never call hardware directly from an OpMode</strong> — all motor/servo calls go through subsystem methods.</li>
+<li><strong>Keep state in enums</strong> — named states are far easier to debug than booleans.</li>
+<li><strong>Only set hardware in update()</strong> — <code>updateCtrls()</code> only changes state, <code>update()</code> writes to hardware.</li>
+<li><strong>Use <code>@Config</code></strong> on public static fields (powers, positions) — FTC Dashboard lets you tune them live.</li>
+<li><strong>Add telemetry in update()</strong> — log the state and key sensor values every loop for easy debugging.</li>
+</ul>
+</div>
+</div>`;
+
+        /* ─── Guide 4: PID & State Machines ─── */
+        const G_PID = `
+<p class="g-eyebrow">// PID &amp; State Machines</p>
+<h1 class="g-title">PID Control &amp; <span>State Machines</span></h1>
+<p class="g-intro">PID controllers make mechanisms move to exact positions consistently. State machines make autonomous routines readable and robust. Together they form the foundation of competitive FTC software.</p>
+<div class="g-divider"></div>
+
+<div class="g-step">
+<div class="g-step-num">01</div>
+<div class="g-step-body">
+<div class="g-step-title">Understanding PID Terms</div>
+<p>A PID controller computes a power output from three components of error:</p>
+<div class="g-table-wrap">
+<table class="g-table">
+<thead><tr><th>Term</th><th>Formula</th><th>Effect</th></tr></thead>
+<tbody>
+<tr><td><strong>P</strong> &mdash; Proportional</td><td>kP &times; error</td><td>Drives toward target. Too high = oscillation.</td></tr>
+<tr><td><strong>I</strong> &mdash; Integral</td><td>kI &times; &sum;error &times; dt</td><td>Eliminates steady-state offset. Rarely needed in FTC.</td></tr>
+<tr><td><strong>D</strong> &mdash; Derivative</td><td>kD &times; &Delta;error/dt</td><td>Damps oscillation. Acts as a brake near target.</td></tr>
+<tr><td><strong>F</strong> &mdash; Feedforward</td><td>kF &times; target</td><td>Counteracts gravity on lifts. Applied regardless of error.</td></tr>
+</tbody>
+</table>
+</div>
+<div class="g-note"><strong>Start with P only.</strong> Increase kP until you get oscillation, then add kD to smooth it out. Only add kI if there is a persistent offset at the target. Add kF if the mechanism fights gravity.</div>
+</div>
+</div>
+
+<div class="g-step">
+<div class="g-step-num">02</div>
+<div class="g-step-body">
+<div class="g-step-title">Add FTCLib to Your Project</div>
+<p>Add the FTCLib dependency to your <strong>TeamCode/build.gradle</strong>:</p>
+<div class="g-code"><pre>dependencies {
+    implementation 'com.arcrobotics.ftclib:core:2.0.9'
+    // Check maven central for the latest version
+}</pre></div>
+<p>Sync Gradle, then import:</p>
+<div class="g-code"><pre>import com.arcrobotics.ftclib.controller.PIDController;
+import com.arcrobotics.ftclib.controller.PIDFController;</pre></div>
+</div>
+</div>
+
+<div class="g-step">
+<div class="g-step-num">03</div>
+<div class="g-step-body">
+<div class="g-step-title">Implement a PID Controller</div>
+<p>Use FTCLib's controller for your lift or any position-controlled mechanism:</p>
+<div class="g-code"><pre>// In your subsystem — init kP, kI, kD
+PIDController pid = new PIDController(0.008, 0.0, 0.0004);
+
+// Set desired target once (or whenever target changes)
+pid.setSetPoint(1350); // encoder ticks
+
+// In update() — called every loop
+public void update() {
+    double current = motor.getCurrentPosition();
+    double output  = pid.calculate(current);       // error = setPoint - current
+    motor.setPower(MathUtils.clamp(output, -1.0, 1.0));
+
+    // For a PIDF controller fighting gravity:
+    // double output = pidf.calculate(current, targetTicks);
+}
+
+boolean atTarget = pid.atSetPoint(); // true when within tolerance</pre></div>
+<div class="g-warn"><strong>Always clamp output</strong> to &minus;1.0 &rarr; 1.0 before calling <code>setPower()</code>. Raw PID output can exceed motor limits and cause hardware warnings.</div>
+</div>
+</div>
+
+<div class="g-step">
+<div class="g-step-num">04</div>
+<div class="g-step-body">
+<div class="g-step-title">Build a State Machine</div>
+<p>A state machine replaces spaghetti boolean logic with a clear, named flow. Define states as an enum, then switch on the current state every loop:</p>
+<div class="g-code"><pre>public enum AutoState {
+    DRIVE_TO_SPIKE,
+    WAIT_FOR_INTAKE,
+    RETURN_TO_SHOOT,
+    SHOOTING_SPINUP,
+    SHOOTING_TRANSFER,
+    DONE
+}
+private AutoState state = AutoState.DRIVE_TO_SPIKE;
+private ElapsedTime timer = new ElapsedTime();
+
+// In loop():
+switch (state) {
+    case DRIVE_TO_SPIKE:
+        if (!follower.isBusy()) {
+            intaker.Intake();
+            state = AutoState.WAIT_FOR_INTAKE;
+            timer.reset();
+        }
+        break;
+
+    case WAIT_FOR_INTAKE:
+        if (intaker.hasSample() || timer.seconds() &gt; 2.0) {
+            intaker.IntakeIdle();
+            state = AutoState.RETURN_TO_SHOOT;
+        }
+        break;
+
+    case SHOOTING_SPINUP:
+        shooter.spinUpDistance();
+        if (shooter.atTargetSpeed()) {
+            state = AutoState.SHOOTING_TRANSFER;
+            timer.reset();
+        }
+        break;
+
+    case DONE:
+        shooter.stop();
+        intaker.IntakeIdle();
+        break;
+}</pre></div>
+<div class="g-note"><strong>Use a timer as a fallback</strong> in every wait state — if a sensor never fires or a path never finishes, the timer prevents the robot from freezing during a match.</div>
+</div>
+</div>`;
+
+        /* ─── Guide 5: Path Following ─── */
+        const G_PATH = `
+<p class="g-eyebrow">// Path Following</p>
+<h1 class="g-title">Path Following with <span>Pedro Pathing</span></h1>
+<p class="g-intro">Pedro Pathing gives your robot smooth, accurate autonomous movement using Bezier curves and continuous position correction. No more straight-line sequences — your robot flows through the field following mathematically defined paths.</p>
+<div class="g-divider"></div>
+
+<div class="g-step">
+<div class="g-step-num">01</div>
+<div class="g-step-body">
+<div class="g-step-title">Add Pedro Pathing Dependency</div>
+<p>Add the following to your <strong>TeamCode/build.gradle</strong> dependencies block:</p>
+<div class="g-code"><pre>dependencies {
+    implementation 'com.pedropathing:pedro:1.0.4'
+    // Check pedropathing.com for the latest version
+}</pre></div>
+<p>Create two constant files in your team package:</p>
+<div class="g-code"><pre>// FConstants.java — follower (drive) constants
+@Config
+public class FConstants implements FollowerConstants { ... }
+
+// LConstants.java — localization constants
+@Config
+public class LConstants implements LocalizerConstants { ... }</pre></div>
+<div class="g-note"><strong>Quick start:</strong> Copy the default FConstants and LConstants templates from <strong>pedropathing.com/docs</strong> to get running immediately, then tune from there.</div>
+</div>
+</div>
+
+<div class="g-step">
+<div class="g-step-num">02</div>
+<div class="g-step-body">
+<div class="g-step-title">Set Up Odometry Localization</div>
+<p>Pedro Pathing uses odometry pods (dead wheels) to track your robot's position on the field. Configure your pod setup in <code>LConstants</code>:</p>
+<div class="g-code"><pre>// LConstants.java — Three-wheel odometry example
+public static Type localizer = Type.THREE_WHEEL;
+
+// Pod offsets from robot center (in inches)
+public static double forwardTicksToInches = 0.00225;
+public static double strafeTicksToInches  = 0.00225;
+public static double turnTicksToInches    = 0.00225;
+
+// Hardware names — match your config file
+public static String leftEncoder   = "leftFront";
+public static String rightEncoder  = "rightRear";
+public static String strafeEncoder = "strafeEncoder";</pre></div>
+<div class="g-warn"><strong>Two-wheel odometry</strong> uses the IMU for heading — set <code>Type.TWO_WHEEL</code> and configure the IMU parameters in LConstants instead.</div>
+</div>
+</div>
+
+<div class="g-step">
+<div class="g-step-num">03</div>
+<div class="g-step-body">
+<div class="g-step-title">Tune Your Drive Constants</div>
+<p>In <code>FConstants</code>, the most important values to tune first:</p>
+<div class="g-table-wrap">
+<table class="g-table">
+<thead><tr><th>Constant</th><th>What it controls</th></tr></thead>
+<tbody>
+<tr><td><code>mass</code></td><td>Robot mass in kg — affects force calculations</td></tr>
+<tr><td><code>maxPower</code></td><td>Maximum motor power (0–1). Start at 0.8.</td></tr>
+<tr><td><code>translationalPIDFCoefficients</code></td><td>PID for reaching target X/Y position</td></tr>
+<tr><td><code>headingPIDFCoefficients</code></td><td>PID for reaching target heading</td></tr>
+<tr><td><code>zeroPowerAccelerationMultiplier</code></td><td>How fast the robot decelerates — affects path end accuracy</td></tr>
+</tbody>
+</table>
+</div>
+<div class="g-note">Use <strong>FTC Dashboard</strong> (connect at <code>192.168.43.1:8080/dash</code>) to tune PIDF values live while the robot runs the tuning OpModes included with Pedro Pathing.</div>
+</div>
+</div>
+
+<div class="g-step">
+<div class="g-step-num">04</div>
+<div class="g-step-body">
+<div class="g-step-title">Build and Follow Your First Path</div>
+<p>Initialize the Follower in your autonomous OpMode, define poses, build paths, and follow them:</p>
+<div class="g-code"><pre>private Follower follower;
+
+@Override
+public void init() {
+    follower = new Follower(hardwareMap, FConstants.class, LConstants.class);
+    follower.setStartingPose(new Pose(0, 0, Math.toRadians(0)));
+}
+
+@Override
+public void start() {
+    Pose start = new Pose(0,  0,  Math.toRadians(0));
+    Pose end   = new Pose(48, 24, Math.toRadians(90));
+    Pose ctrl  = new Pose(24, 0,  0); // Bezier control handle
+
+    // Straight line path
+    PathChain line = follower.pathBuilder()
+        .addPath(new BezierLine(start, end))
+        .setLinearHeadingInterpolation(start.getHeading(), end.getHeading())
+        .build();
+
+    // Curved path
+    PathChain curve = follower.pathBuilder()
+        .addPath(new BezierCurve(start, ctrl, end))
+        .setTangentHeadingInterpolation()
+        .build();
+
+    follower.followPath(line);
+}
+
+@Override
+public void loop() {
+    follower.update();         // always call every loop
+    if (!follower.isBusy()) {
+        // path finished — trigger next action
+    }
+    Drawing.drawRobot(follower.poseUpdater.getPose(), "#4CAF50");
+    Drawing.sendPacket();
+}</pre></div>
+<div class="g-note"><strong>Visualizer tool:</strong> Use the Pedro Pathing web visualizer at <strong>visualizer.pedropathing.com</strong> to drag and drop control points and generate path code automatically.</div>
+</div>
+</div>`;
+
+        const GUIDES = {
+            'android-studio':  page('// Java &amp; Android Studio', 'Wireless ADB Setup',             G_ANDROID),
+            'hardware-teleop': page('// Hardware &amp; TeleOp',    'Hardware Config &amp; TeleOp',    G_HARDWARE),
+            'subsystems':      page('// Subsystem Architecture',   'Subsystem Architecture',           G_SUBSYSTEMS),
+            'pid-statemachines': page('// PID &amp; State Machines','PID Control &amp; State Machines', G_PID),
+            'path-following':  page('// Path Following',           'Path Following with Pedro Pathing', G_PATH),
+        };
+
+        document.querySelectorAll('.tl-item-clickable').forEach(item => {
+            item.addEventListener('click', () => {
+                const key  = item.dataset.guide;
+                const html = GUIDES[key];
+                if (!html) return;
+                const w = window.open('', '_blank');
+                if (w) { w.document.write(html); w.document.close(); }
+            });
         });
     })();
 </script>
