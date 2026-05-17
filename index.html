@@ -129,9 +129,8 @@
             min-height: 100vh;
             display: flex; align-items: center; justify-content: center;
             text-align: center;
-            /* CHANGED: Swapped padding rules to give 100px top clearance (for nav) */
-            /* and 150px bottom clearance (creates a safe area for the scroll tracker) */
-            padding: 100px 28px 150px; 
+            padding: 0 28px;
+            padding-top: 80px;
         }
         .hero-inner { max-width: 820px; }
 
@@ -166,7 +165,7 @@
         }
 
         .hero-sub {
-            margin-top: 16px; /* CHANGED: Reduced from 22px to save vertical space */
+            margin-top: 22px;
             font-size: 1.2rem;
             color: var(--muted);
             max-width: 580px;
@@ -175,7 +174,7 @@
         }
 
         .hero-ctas {
-            margin-top: 32px; /* CHANGED: Reduced from 44px to prevent screen crowding */
+            margin-top: 44px;
             display: flex; gap: 16px; justify-content: center; flex-wrap: wrap;
             animation: fadein 1.3s ease both .45s;
         }
@@ -488,6 +487,131 @@
             50%  { transform: scaleY(1); transform-origin: top; }
             51%  { transform: scaleY(1); transform-origin: bottom; }
             100% { transform: scaleY(0); transform-origin: bottom; }
+        }
+
+        /* ── Documentation Section ──────────────── */
+        .docs-layout {
+            display: grid;
+            grid-template-columns: 210px 1fr;
+            gap: 36px;
+            align-items: start;
+            margin-top: 50px;
+        }
+        .docs-sidebar {
+            position: sticky;
+            top: 88px;
+            background: var(--panel);
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            padding: 16px 0;
+            overflow: hidden;
+        }
+        .docs-sidebar-label {
+            font-family: var(--font-code);
+            font-size: .6rem; letter-spacing: 3px;
+            color: var(--muted); text-transform: uppercase;
+            padding: 10px 16px 5px; display: block;
+        }
+        .doc-nav-btn {
+            display: block; width: 100%;
+            text-align: left; background: none; border: none;
+            padding: 8px 16px;
+            font-family: var(--font-body); font-size: .98rem;
+            font-weight: 500; color: var(--muted);
+            cursor: none; border-left: 2px solid transparent;
+            transition: color .18s, background .18s, border-color .18s;
+        }
+        .doc-nav-btn:hover { color: var(--text); background: rgba(0,200,255,.05); }
+        .doc-nav-btn.active { color: var(--accent); border-left-color: var(--accent); background: rgba(0,200,255,.07); }
+        .doc-nav-divider { height: 1px; background: var(--border); margin: 8px 0; }
+        .doc-nav-group-label {
+            font-family: var(--font-code);
+            font-size: .58rem; letter-spacing: 2px;
+            color: var(--muted); opacity: .7;
+            text-transform: uppercase;
+            padding: 10px 16px 3px; display: block;
+        }
+
+        .docs-content { min-height: 560px; }
+        .doc-panel { display: none; }
+        .doc-panel.active { display: block; }
+
+        .doc-eyebrow {
+            font-family: var(--font-code);
+            font-size: .7rem; letter-spacing: 4px;
+            color: var(--accent3); text-transform: uppercase;
+            margin-bottom: 10px;
+        }
+        .doc-h1 {
+            font-family: var(--font-head);
+            font-size: clamp(1.5rem, 3vw, 2.2rem);
+            color: #fff; font-weight: 700;
+            letter-spacing: .5px; margin-bottom: 6px;
+        }
+        .doc-h1 span { color: var(--accent); }
+        .doc-lead {
+            color: var(--muted); font-size: 1.03rem;
+            line-height: 1.82; margin-bottom: 30px;
+            padding-bottom: 24px; border-bottom: 1px solid var(--border);
+        }
+        .doc-lead strong { color: var(--text); }
+        .doc-h2 {
+            font-family: var(--font-head);
+            font-size: .95rem; color: #fff;
+            letter-spacing: 1px; margin: 30px 0 10px;
+        }
+        .doc-h2::before { content: '// '; color: var(--accent3); font-family: var(--font-code); font-size: .82rem; }
+        .doc-p { color: var(--muted); font-size: 1rem; line-height: 1.78; margin-bottom: 12px; }
+        .doc-p strong { color: var(--text); }
+        .doc-ul, .doc-ol { color: var(--muted); padding-left: 22px; margin-bottom: 14px; font-size: 1rem; line-height: 1.78; }
+        .doc-ul li, .doc-ol li { margin-bottom: 6px; }
+        .doc-ul li strong, .doc-ol li strong { color: var(--text); }
+        .doc-code {
+            background: #020810;
+            border: 1px solid var(--border); border-radius: 6px;
+            padding: 18px 22px; overflow-x: auto; margin: 14px 0;
+            position: relative;
+        }
+        .doc-code-label {
+            font-family: var(--font-code);
+            font-size: .65rem; letter-spacing: 2px;
+            color: var(--muted); text-transform: uppercase;
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 10px; margin-bottom: 14px;
+        }
+        .doc-code pre { font-family: var(--font-code); font-size: .83rem; line-height: 1.78; color: var(--text); white-space: pre; }
+        .doc-note {
+            background: rgba(0,200,255,.06); border-left: 3px solid var(--accent);
+            border-radius: 0 4px 4px 0; padding: 12px 18px; margin: 14px 0;
+            font-size: .98rem; color: var(--text); line-height: 1.7;
+        }
+        .doc-note strong { color: var(--accent); }
+        .doc-warn {
+            background: rgba(123,47,255,.08); border-left: 3px solid var(--accent2);
+            border-radius: 0 4px 4px 0; padding: 12px 18px; margin: 14px 0;
+            font-size: .98rem; color: var(--text); line-height: 1.7;
+        }
+        .doc-warn strong { color: #c084fc; }
+        .doc-table-wrap { overflow-x: auto; margin: 14px 0; }
+        .doc-table { width: 100%; border-collapse: collapse; font-size: .95rem; }
+        .doc-table th {
+            font-family: var(--font-head); font-size: .66rem; letter-spacing: 2px;
+            color: var(--accent); text-align: left; padding: 9px 14px;
+            border-bottom: 2px solid var(--border); text-transform: uppercase;
+        }
+        .doc-table td { padding: 11px 14px; border-bottom: 1px solid var(--border); color: var(--muted); vertical-align: top; }
+        .doc-table tr:last-child td { border-bottom: none; }
+        .doc-table td:first-child { color: var(--text); font-weight: 500; }
+        .doc-table td code, .doc-table th code { font-family: var(--font-code); font-size: .8rem; color: var(--accent3); background: rgba(0,200,255,.07); padding: 1px 5px; border-radius: 2px; }
+        .doc-diagram { background: var(--panel); border: 1px solid var(--border); border-radius: 6px; padding: 20px; margin: 16px 0; }
+        .doc-diagram-label { font-family: var(--font-code); font-size: .65rem; letter-spacing: 3px; color: var(--muted); text-transform: uppercase; text-align: center; margin-bottom: 12px; }
+        .doc-step-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 16px 0; }
+        .doc-step-card { background: rgba(0,200,255,.04); border: 1px solid var(--border); border-radius: 6px; padding: 16px; }
+        .doc-step-card-title { font-family: var(--font-head); font-size: .8rem; color: var(--accent); margin-bottom: 8px; letter-spacing: 1px; }
+        @media (max-width: 820px) {
+            .docs-layout { grid-template-columns: 1fr; }
+            .docs-sidebar { position: static; }
+            .doc-step-grid { grid-template-columns: 1fr; }
         }
 
         /* ── Roadmap Clickable Items ─────────────── */
@@ -1393,7 +1517,7 @@
 ═══════════════════════════════════════════ -->
 <footer>
     <!--✏️ EDIT: footer -->
-    FTC Programming Hub · Built with ❤️ by aaravdhawan25 ·
+    FTC Programming Hub · Built with ❤️ for FTC ·
     <a href="https://github.com/aaravdhawan25" target="_blank">GitHub</a> ·
     <a href="https://ftc-docs.firstinspires.org" target="_blank">FTC Docs</a>
 </footer>
@@ -2187,6 +2311,7 @@ code{font-family:var(--font-code);font-size:.84rem;color:var(--accent3);backgrou
 .g-table td:first-child{color:var(--text);font-weight:600}
 .g-section-head{font-family:var(--font-code);font-size:.72rem;letter-spacing:3px;color:var(--accent3);text-transform:uppercase;margin:30px 0 14px}
 @media(max-width:650px){.g-platform-grid{grid-template-columns:1fr}.g-nav{padding:0 16px}.g-main{padding:40px 16px 80px}.g-step{grid-template-columns:44px 1fr}}
+.kw{color:#c084fc}.ty{color:#67e8f9}.fn{color:#a5f3fc}.st{color:#86efac}.cm{color:#4a7a9b;font-style:italic}.nu{color:#fbbf24}.an{color:#fde68a}.docs-layout{display:grid;grid-template-columns:170px 1fr;gap:22px;align-items:start;margin-top:32px}.docs-sidebar{background:var(--panel);border:1px solid var(--border);border-radius:6px;padding:12px 0;position:sticky;top:80px;max-height:calc(100vh - 120px);overflow-y:auto}.docs-sidebar-label{font-family:var(--font-code);font-size:.58rem;letter-spacing:3px;color:var(--muted);text-transform:uppercase;padding:10px 14px 4px;display:block}.doc-nav-btn{display:block;width:100%;text-align:left;background:none;border:none;padding:8px 14px;font-family:var(--font-body);font-size:.92rem;font-weight:500;color:var(--muted);cursor:pointer;border-left:2px solid transparent;transition:color .15s,background .15s,border-color .15s;white-space:nowrap}.doc-nav-btn:hover{color:var(--text);background:rgba(0,200,255,.05)}.doc-nav-btn.active{color:var(--accent);border-left-color:var(--accent);background:rgba(0,200,255,.07)}.doc-nav-divider{height:1px;background:var(--border);margin:6px 0}.doc-nav-group-label{font-family:var(--font-code);font-size:.56rem;letter-spacing:2px;color:var(--muted);opacity:.6;text-transform:uppercase;padding:8px 14px 2px;display:block}.docs-content{min-height:500px;overflow:hidden}.doc-panel{display:none}.doc-panel.active{display:block}.doc-eyebrow{font-family:var(--font-code);font-size:.68rem;letter-spacing:4px;color:var(--accent3);text-transform:uppercase;margin-bottom:8px}.doc-h1{font-family:var(--font-head);font-size:clamp(1.3rem,2.8vw,1.9rem);color:#fff;font-weight:700;letter-spacing:.5px;margin-bottom:5px}.doc-h1 span{color:var(--accent)}.doc-lead{color:var(--muted);font-size:1rem;line-height:1.8;margin-bottom:24px;padding-bottom:20px;border-bottom:1px solid var(--border)}.doc-lead strong{color:var(--text)}.doc-h2{font-family:var(--font-head);font-size:.87rem;color:#fff;letter-spacing:1px;margin:24px 0 9px}.doc-h2::before{content:'// ';color:var(--accent3);font-family:var(--font-code);font-size:.78rem}.doc-p{color:var(--muted);font-size:1rem;line-height:1.78;margin-bottom:11px}.doc-p strong{color:var(--text)}.doc-ul,.doc-ol{color:var(--muted);padding-left:20px;margin-bottom:12px;font-size:1rem;line-height:1.78}.doc-ul li,.doc-ol li{margin-bottom:5px}.doc-ul li strong,.doc-ol li strong{color:var(--text)}.doc-code{background:#020810;border:1px solid var(--border);border-radius:6px;padding:14px 18px;overflow-x:auto;margin:11px 0}.doc-code-label{font-family:var(--font-code);font-size:.6rem;letter-spacing:2px;color:var(--muted);text-transform:uppercase;border-bottom:1px solid var(--border);padding-bottom:8px;margin-bottom:11px}.doc-code pre{font-family:var(--font-code);font-size:.81rem;line-height:1.78;color:var(--text);white-space:pre}.doc-note{background:rgba(0,200,255,.06);border-left:3px solid var(--accent);border-radius:0 4px 4px 0;padding:11px 15px;margin:11px 0;font-size:.96rem;color:var(--text);line-height:1.7}.doc-note strong{color:var(--accent)}.doc-warn{background:rgba(123,47,255,.08);border-left:3px solid var(--accent2);border-radius:0 4px 4px 0;padding:11px 15px;margin:11px 0;font-size:.96rem;color:var(--text);line-height:1.7}.doc-warn strong{color:#c084fc}.doc-table-wrap{overflow-x:auto;margin:11px 0}.doc-table{width:100%;border-collapse:collapse;font-size:.92rem}.doc-table th{font-family:var(--font-head);font-size:.63rem;letter-spacing:2px;color:var(--accent);text-align:left;padding:8px 11px;border-bottom:2px solid var(--border);text-transform:uppercase}.doc-table td{padding:10px 11px;border-bottom:1px solid var(--border);color:var(--muted);vertical-align:top}.doc-table tr:last-child td{border-bottom:none}.doc-table td:first-child{color:var(--text);font-weight:500}.doc-table td code{font-family:var(--font-code);font-size:.78rem;color:var(--accent3);background:rgba(0,200,255,.07);padding:1px 5px;border-radius:2px}.doc-diagram{background:var(--panel);border:1px solid var(--border);border-radius:6px;padding:16px;margin:12px 0}.doc-diagram-label{font-family:var(--font-code);font-size:.6rem;letter-spacing:3px;color:var(--muted);text-transform:uppercase;text-align:center;margin-bottom:10px}.doc-step-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:12px 0}.doc-step-card{background:rgba(0,200,255,.04);border:1px solid var(--border);border-radius:6px;padding:13px}.doc-step-card-title{font-family:var(--font-head);font-size:.76rem;color:var(--accent);margin-bottom:6px;letter-spacing:1px}@media(max-width:760px){.docs-layout{grid-template-columns:1fr}.docs-sidebar{position:static;max-height:none}.doc-step-grid{grid-template-columns:1fr}}
         `;
 
         function page(label, title, body) {
@@ -2744,12 +2869,372 @@ public void loop() {
 </div>
 </div>`;
 
+        /* ─── Full Pedro Pathing Docs Page (opens in new tab via Path Following roadmap item) ─── */
+        function buildDocsPage() {
+            var DCSS = GCSS + '\
+body{overflow:hidden}\
+.dshell{display:grid;grid-template-columns:218px 1fr;height:calc(100vh - 62px);overflow:hidden}\
+.dsb{overflow-y:auto;background:#070f20;border-right:1px solid rgba(0,200,255,.18);padding:12px 0;flex-shrink:0}\
+.dsb-label{font-family:\'Share Tech Mono\',monospace;font-size:.58rem;letter-spacing:3px;color:#4a7a9b;text-transform:uppercase;padding:10px 16px 4px;display:block}\
+.dsb-group{font-family:\'Share Tech Mono\',monospace;font-size:.55rem;letter-spacing:2px;color:#4a7a9b;opacity:.6;text-transform:uppercase;padding:8px 16px 2px;display:block}\
+.dsb-div{height:1px;background:rgba(0,200,255,.18);margin:6px 0}\
+.dsb-btn{display:block;width:100%;text-align:left;background:none;border:none;border-left:2px solid transparent;padding:8px 14px;font-family:\'Rajdhani\',sans-serif;font-size:.96rem;font-weight:500;color:#4a7a9b;cursor:pointer;transition:color .15s,background .15s,border-color .15s}\
+.dsb-btn:hover{color:#c8e6f5;background:rgba(0,200,255,.05)}\
+.dsb-btn.act{color:#00c8ff;border-left-color:#00c8ff;background:rgba(0,200,255,.07)}\
+.dmain{overflow-y:auto;padding:44px 50px 90px}\
+.dpanel{display:none}\
+.dpanel.act{display:block}\
+.dey{font-family:\'Share Tech Mono\',monospace;font-size:.68rem;letter-spacing:4px;color:#00ffc3;text-transform:uppercase;margin-bottom:10px}\
+.dh1{font-family:\'Orbitron\',monospace;font-size:clamp(1.5rem,3vw,2.1rem);color:#fff;font-weight:700;letter-spacing:.5px;margin-bottom:8px}\
+.dh1 span{color:#00c8ff}\
+.dlead{color:#4a7a9b;font-size:1.02rem;line-height:1.82;margin-bottom:28px;padding-bottom:22px;border-bottom:1px solid rgba(0,200,255,.15)}\
+.dlead strong{color:#c8e6f5}\
+.dh2{font-family:\'Orbitron\',monospace;font-size:.9rem;color:#fff;letter-spacing:1px;margin:26px 0 9px}\
+.dh2::before{content:\'// \';color:#00ffc3;font-family:\'Share Tech Mono\',monospace;font-size:.8rem}\
+.dp{color:#4a7a9b;font-size:1rem;line-height:1.78;margin-bottom:11px}\
+.dp strong{color:#c8e6f5}\
+.dul,.dol{color:#4a7a9b;padding-left:20px;margin-bottom:12px;font-size:1rem;line-height:1.78}\
+.dul li,.dol li{margin-bottom:5px}\
+.dul li strong,.dol li strong{color:#c8e6f5}\
+.dcode{background:#020810;border:1px solid rgba(0,200,255,.18);border-radius:5px;padding:16px 20px;overflow-x:auto;margin:12px 0}\
+.dcode-lbl{font-family:\'Share Tech Mono\',monospace;font-size:.62rem;letter-spacing:2px;color:#4a7a9b;text-transform:uppercase;border-bottom:1px solid rgba(0,200,255,.15);padding-bottom:9px;margin-bottom:12px}\
+.dcode pre{font-family:\'Share Tech Mono\',monospace;font-size:.82rem;line-height:1.78;color:#c8e6f5;white-space:pre}\
+.dnote{background:rgba(0,200,255,.06);border-left:3px solid #00c8ff;border-radius:0 4px 4px 0;padding:11px 16px;margin:12px 0;font-size:.97rem;color:#c8e6f5;line-height:1.7}\
+.dnote strong{color:#00c8ff}\
+.dwarn{background:rgba(123,47,255,.08);border-left:3px solid #7b2fff;border-radius:0 4px 4px 0;padding:11px 16px;margin:12px 0;font-size:.97rem;color:#c8e6f5;line-height:1.7}\
+.dwarn strong{color:#c084fc}\
+.dtw{overflow-x:auto;margin:12px 0}\
+.dtbl{width:100%;border-collapse:collapse;font-size:.93rem}\
+.dtbl th{font-family:\'Orbitron\',monospace;font-size:.64rem;letter-spacing:2px;color:#00c8ff;text-align:left;padding:8px 12px;border-bottom:2px solid rgba(0,200,255,.18);text-transform:uppercase}\
+.dtbl td{padding:10px 12px;border-bottom:1px solid rgba(0,200,255,.12);color:#4a7a9b;vertical-align:top}\
+.dtbl tr:last-child td{border-bottom:none}\
+.dtbl td:first-child{color:#c8e6f5;font-weight:500}\
+.dtbl td code,.dtbl th code{font-family:\'Share Tech Mono\',monospace;font-size:.79rem;color:#00ffc3;background:rgba(0,200,255,.07);padding:1px 5px;border-radius:2px}\
+code{font-family:\'Share Tech Mono\',monospace;font-size:.82rem;color:#00ffc3;background:rgba(0,200,255,.08);padding:1px 5px;border-radius:2px}\
+.dsgrid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:14px 0}\
+.dscard{background:rgba(0,200,255,.04);border:1px solid rgba(0,200,255,.15);border-radius:5px;padding:14px}\
+.dscard-t{font-family:\'Orbitron\',monospace;font-size:.75rem;color:#00c8ff;margin-bottom:7px;letter-spacing:1px}\
+.ddiag{background:#070f20;border:1px solid rgba(0,200,255,.18);border-radius:5px;padding:18px;margin:14px 0}\
+.ddiag-lbl{font-family:\'Share Tech Mono\',monospace;font-size:.62rem;letter-spacing:3px;color:#4a7a9b;text-transform:uppercase;text-align:center;margin-bottom:10px}\
+.kw{color:#c084fc}.ty{color:#67e8f9}.fn{color:#a5f3fc}.st{color:#86efac}.cm{color:#4a7a9b;font-style:italic}.nu{color:#fbbf24}.an{color:#fde68a}\
+a{color:#00c8ff}\
+.dfooter{margin-top:28px;padding-top:20px;border-top:1px solid rgba(0,200,255,.18);display:flex;align-items:center;gap:14px;flex-wrap:wrap}\
+.dbtn{font-family:\'Orbitron\',monospace;font-size:.7rem;letter-spacing:2px;text-transform:uppercase;padding:11px 22px;border-radius:3px;text-decoration:none;display:inline-block;transition:all .25s;cursor:pointer;border:none}\
+.dbtn-p{background:#00c8ff;color:#040d1a;font-weight:700}\
+.dbtn-p:hover{background:#fff}\
+.dbtn-o{border:1.5px solid rgba(0,200,255,.3);color:#c8e6f5;background:none}\
+.dbtn-o:hover{border-color:#00c8ff;color:#00c8ff}\
+@media(max-width:680px){.dshell{grid-template-columns:1fr;height:auto}body{overflow:auto}.dsb{height:auto}.dsgrid{grid-template-columns:1fr}.dmain{padding:28px 18px 60px}}\
+';
+            return '<!DOCTYPE html><html lang="en"><head>'
+                + '<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">'
+                + '<title>Pedro Pathing Docs \u2014 FTC.DEV<\/title>'
+                + '<link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Rajdhani:wght@300;400;500;600;700&family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">'
+                + '<style>' + DCSS + '<\/style><\/head><body>'
+                + '<nav class="g-nav"><a class="g-back" href="javascript:window.close()">\u2190 Back<\/a><span class="g-logo">FTC.DEV<\/span><span class="g-label">// Pedro Pathing Docs<\/span><\/nav>'
+                + '<div class="dshell">'
+                + '<nav class="dsb">'
+                + '<span class="dsb-label">Getting Started<\/span>'
+                + '<button class="dsb-btn act" data-panel="intro">Introduction<\/button>'
+                + '<button class="dsb-btn" data-panel="install">Installation<\/button>'
+                + '<button class="dsb-btn" data-panel="constants">Constants<\/button>'
+                + '<button class="dsb-btn" data-panel="tuning">Tuning<\/button>'
+                + '<div class="dsb-div"><\/div>'
+                + '<span class="dsb-group">Reference<\/span>'
+                + '<button class="dsb-btn" data-panel="bezier">Bezier Curves<\/button>'
+                + '<button class="dsb-btn" data-panel="pathbuilder">Path Builder<\/button>'
+                + '<button class="dsb-btn" data-panel="interp">Interpolation<\/button>'
+                + '<div class="dsb-div"><\/div>'
+                + '<span class="dsb-group">Examples<\/span>'
+                + '<button class="dsb-btn" data-panel="example">Example Auto<\/button>'
+                + '<\/nav>'
+                + '<div class="dmain">'
+
+                /* ── INTRO ── */
+                + '<div class="dpanel act" id="dp-intro">'
+                + '<p class="dey">\/\/ Getting Started<\/p>'
+                + '<h1 class="dh1">What is <span>Pedro Pathing?<\/span><\/h1>'
+                + '<p class="dlead"><strong>Pedro Pathing<\/strong> is a path follower initially developed by FTC team 10158 to revolutionize autonomous navigation. It uses B\u00e9zier curves, PIDF control, centripetal force correction, and more to provide smooth, fast, and accurate path following.<\/p>'
+                + '<h2 class="dh2">Why Use Pedro Pathing<\/h2>'
+                + '<div class="dsgrid"><div class="dscard"><div class="dscard-t">\u26a1 Faster Execution<\/div><p class="dp" style="margin:0;font-size:.93rem">Uses four vectors to calculate optimal wheel powers &mdash; your robot moves faster than traditional approaches.<\/p><\/div>'
+                + '<div class="dscard"><div class="dscard-t">\ud83c\udfaf Disturbance Correction<\/div><p class="dp" style="margin:0;font-size:.93rem">Localization lets Pedro know your robot\'s position and actively correct for collisions and field disturbances.<\/p><\/div>'
+                + '<div class="dscard"><div class="dscard-t">\ud83d\uddfa On-the-Fly Paths<\/div><p class="dp" style="margin:0;font-size:.93rem">PID control means the robot can instantly navigate to any position &mdash; paths don\'t have to be pre-planned.<\/p><\/div>'
+                + '<div class="dscard"><div class="dscard-t">\ud83d\udd01 Consistent Autos<\/div><p class="dp" style="margin:0;font-size:.93rem">Repeatable, reliable routines match-to-match. Less variance means more confidence at competition.<\/p><\/div><\/div>'
+                + '<h2 class="dh2">Prerequisites<\/h2>'
+                + '<ul class="dul"><li><strong>Omnidirectional drive<\/strong> &mdash; mecanum, x-drive, or swerve. Tank drive is not supported.<\/li><li><strong>Localization<\/strong> &mdash; dead wheels, goBILDA Pinpoint, SparkFun OTOS, or drive motor encoders.<\/li><li><strong>Android Studio<\/strong> &mdash; Pedro does not work with OnBot Java or Blocks.<\/li><\/ul>'
+                + '<h2 class="dh2">Coordinate System<\/h2>'
+                + '<p class="dp">Pedro uses <strong>[0, 144]<\/strong> on both X and Y, with <strong>(0,0) at the bottom-left corner<\/strong>. All headings are in radians.<\/p>'
+                + '<div class="dnote"><strong>Converting from RoadRunner:<\/strong> Add +72 to both X and Y of any RoadRunner pose.<\/div>'
+                + '<div class="ddiag"><div class="ddiag-lbl">\/\/ Field Coordinate System (144&times;144 inches)<\/div>'
+                + '<svg width="100%" viewBox="0 0 520 210" xmlns="http:\/\/www.w3.org\/2000\/svg">'
+                + '<rect x="40" y="10" width="450" height="185" fill="#040d1a" rx="3" stroke="rgba(0,200,255,.2)" stroke-width="1"\/>'
+                + '<line x1="40" y1="72" x2="490" y2="72" stroke="rgba(0,200,255,.08)" stroke-width=".8"\/><line x1="40" y1="134" x2="490" y2="134" stroke="rgba(0,200,255,.08)" stroke-width=".8"\/>'
+                + '<line x1="153" y1="10" x2="153" y2="195" stroke="rgba(0,200,255,.08)" stroke-width=".8"\/><line x1="265" y1="10" x2="265" y2="195" stroke="rgba(0,200,255,.08)" stroke-width=".8"\/><line x1="378" y1="10" x2="378" y2="195" stroke="rgba(0,200,255,.08)" stroke-width=".8"\/>'
+                + '<circle cx="40" cy="195" r="4.5" fill="#00c8ff"\/><text x="48" y="192" fill="#00ffc3" font-family="Share Tech Mono,monospace" font-size="8">(0,0)<\/text>'
+                + '<line x1="40" y1="194" x2="484" y2="194" stroke="#00c8ff" stroke-width="1.2" opacity=".5"\/><polygon points="484,190 492,194 484,198" fill="#00c8ff" opacity=".5"\/>'
+                + '<text x="474" y="187" fill="#4a7a9b" font-family="Share Tech Mono,monospace" font-size="8">X<\/text>'
+                + '<line x1="42" y1="195" x2="42" y2="15" stroke="#00c8ff" stroke-width="1.2" opacity=".5"\/><polygon points="38,15 42,7 46,15" fill="#00c8ff" opacity=".5"\/>'
+                + '<text x="48" y="22" fill="#4a7a9b" font-family="Share Tech Mono,monospace" font-size="8">Y<\/text>'
+                + '<text x="153" y="207" fill="#4a7a9b" font-family="Share Tech Mono,monospace" font-size="7.5" text-anchor="middle">36<\/text><text x="265" y="207" fill="#4a7a9b" font-family="Share Tech Mono,monospace" font-size="7.5" text-anchor="middle">72<\/text><text x="378" y="207" fill="#4a7a9b" font-family="Share Tech Mono,monospace" font-size="7.5" text-anchor="middle">108<\/text><text x="490" y="207" fill="#4a7a9b" font-family="Share Tech Mono,monospace" font-size="7.5" text-anchor="middle">144<\/text>'
+                + '<text x="30" y="136" fill="#4a7a9b" font-family="Share Tech Mono,monospace" font-size="7.5" text-anchor="end">72<\/text><text x="30" y="14" fill="#4a7a9b" font-family="Share Tech Mono,monospace" font-size="7.5" text-anchor="end">144<\/text>'
+                + '<circle cx="200" cy="148" r="11" fill="rgba(0,200,255,.12)" stroke="#00c8ff" stroke-width="1.5"\/><line x1="200" y1="148" x2="212" y2="137" stroke="#00c8ff" stroke-width="1.5"\/>'
+                + '<text x="215" y="155" fill="#00c8ff" font-family="Share Tech Mono,monospace" font-size="7.5">(48, 72)<\/text>'
+                + '<path d="M 200,148 Q 320,80 420,42" stroke="#00ffc3" stroke-width="2" fill="none" stroke-dasharray="6 3" opacity=".7"\/><circle cx="420" cy="42" r="4" fill="#00ffc3"\/>'
+                + '<text x="390" y="35" fill="#00ffc3" font-family="Share Tech Mono,monospace" font-size="7.5">(108,120)<\/text>'
+                + '<\/svg><\/div><\/div>'
+
+                /* ── INSTALL ── */
+                + '<div class="dpanel" id="dp-install">'
+                + '<p class="dey">\/\/ Setup<\/p><h1 class="dh1"><span>Installation<\/span><\/h1>'
+                + '<p class="dlead">Two ways to install Pedro Pathing: the Quickstart repo (recommended) or manual installation into an existing project.<\/p>'
+                + '<h2 class="dh2">Method 1 &mdash; Quickstart (Recommended)<\/h2>'
+                + '<div class="dsgrid"><div class="dscard"><div class="dscard-t">Android Studio<\/div><p class="dp" style="margin:0;font-size:.92rem">Go to <strong>File &rarr; New &rarr; Project from Version Control<\/strong> and enter the URL below.<\/p><\/div>'
+                + '<div class="dscard"><div class="dscard-t">Command Line<\/div><p class="dp" style="margin:0;font-size:.92rem">Run the git clone command. Requires <strong>git<\/strong> installed.<\/p><\/div><\/div>'
+                + '<div class="dcode"><pre>https:\/\/github.com\/Pedro-Pathing\/Quickstart.git<\/pre><\/div>'
+                + '<div class="dcode"><pre>git clone https:\/\/github.com\/Pedro-Pathing\/Quickstart.git<\/pre><\/div>'
+                + '<div class="dnote"><strong>Done!<\/strong> That\'s all for the Quickstart method.<\/div>'
+                + '<h2 class="dh2">Method 2 &mdash; Manual Installation<\/h2>'
+                + '<ol class="dol"><li>In <code>build.dependencies.gradle<\/code>, add to <code>repositories { }<\/code>:<\/li><\/ol>'
+                + '<div class="dcode"><pre>maven { url = "https:\/\/mymaven.bylazar.com\/releases" }<\/pre><\/div>'
+                + '<ol class="dol" start="2"><li>Add to <code>dependencies { }<\/code>:<\/li><\/ol>'
+                + '<div class="dcode"><pre>implementation \'com.pedropathing:ftc:x.y.z\'\nimplementation \'com.pedropathing:telemetry:1.0.0\'\nimplementation \'com.bylazar:fullpanels:1.0.12\'<\/pre><\/div>'
+                + '<div class="dwarn"><strong>Version:<\/strong> Replace <code>x.y.z<\/code> with the latest release from <a href="https:\/\/pedropathing.com" target="_blank">pedropathing.com<\/a>.<\/div>'
+                + '<ol class="dol" start="3"><li>Press <strong>"Sync Now"<\/strong> in the Gradle banner.<\/li><li>Go to <strong>File &rarr; Project Structure &rarr; Modules<\/strong>. Set <strong>Compile SDK to 34<\/strong> for both modules. Apply &amp; OK.<\/li><li>Copy the <code>pedroPathing<\/code> package from the <a href="https:\/\/github.com\/Pedro-Pathing\/Quickstart\/tree\/master\/TeamCode\/src\/main\/java\/org\/firstinspires\/ftc\/teamcode\/pedroPathing" target="_blank">Quickstart repo<\/a> into your TeamCode.<\/li><\/ol><\/div>'
+
+                /* ── CONSTANTS ── */
+                + '<div class="dpanel" id="dp-constants">'
+                + '<p class="dey">\/\/ Configuration<\/p><h1 class="dh1">The <span>Constants<\/span> File<\/h1>'
+                + '<p class="dlead">The <code>Constants<\/code> file configures everything for your robot. It has four types of constants and the <code>createFollower()<\/code> factory method used in every OpMode.<\/p>'
+                + '<h2 class="dh2">Four Types of Constants<\/h2>'
+                + '<div class="dtw"><table class="dtbl"><thead><tr><th>Type<\/th><th>Description<\/th><th>Set By<\/th><\/tr><\/thead><tbody>'
+                + '<tr><td>Follower Constants<\/td><td>PID, centripetal, and auto-tuner values<\/td><td>Tuning OpModes<\/td><\/tr>'
+                + '<tr><td>Drivetrain Constants<\/td><td>Motor names, directions, and drive type<\/td><td>Manual config<\/td><\/tr>'
+                + '<tr><td>Localizer Constants<\/td><td>Odometry pod names, offsets, and sensor type<\/td><td>Manual config<\/td><\/tr>'
+                + '<tr><td>Path Constraints<\/td><td>Conditions under which a path may end<\/td><td>Manual \/ tuning<\/td><\/tr>'
+                + '<\/tbody><\/table><\/div>'
+                + '<h2 class="dh2">Starting Constants File<\/h2>'
+                + '<div class="dcode"><div class="dcode-lbl">Constants.java<\/div><pre>'
+                + '<span class="kw">public class<\/span> <span class="ty">Constants<\/span> {\n'
+                + '    <span class="kw">public static<\/span> <span class="ty">FollowerConstants<\/span> followerConstants =\n        <span class="kw">new<\/span> <span class="ty">FollowerConstants<\/span>();\n\n'
+                + '    <span class="cm">\/\/ MaxPower, ZeroPowerAccel, TranslationalPIDF, HeadingPIDF<\/span>\n'
+                + '    <span class="kw">public static<\/span> <span class="ty">PathConstraints<\/span> pathConstraints =\n'
+                + '        <span class="kw">new<\/span> <span class="ty">PathConstraints<\/span>(<span class="nu">0.99<\/span>, <span class="nu">100<\/span>, <span class="nu">1<\/span>, <span class="nu">1<\/span>);\n\n'
+                + '    <span class="kw">public static<\/span> <span class="ty">Follower<\/span> <span class="fn">createFollower<\/span>(<span class="ty">HardwareMap<\/span> hw) {\n'
+                + '        <span class="kw">return new<\/span> <span class="ty">FollowerBuilder<\/span>(followerConstants, hw)\n'
+                + '            .<span class="fn">pathConstraints<\/span>(pathConstraints)\n'
+                + '            .<span class="fn">build<\/span>();\n    }\n}'
+                + '<\/pre><\/div>'
+                + '<div class="dnote"><strong>createFollower():<\/strong> Call this in every OpMode. Ensures all constants are applied consistently.<\/div>'
+                + '<h2 class="dh2">PathConstraints Parameters<\/h2>'
+                + '<div class="dtw"><table class="dtbl"><thead><tr><th>Parameter<\/th><th>Typical<\/th><th>Effect<\/th><\/tr><\/thead><tbody>'
+                + '<tr><td>maxPower<\/td><td><code>0.99<\/code><\/td><td>Max motor power. Keep below 1.0 to avoid brownouts.<\/td><\/tr>'
+                + '<tr><td>zeroPowerAcceleration<\/td><td><code>100<\/code><\/td><td>Natural deceleration &mdash; set by ZeroPowerAccelTuner.<\/td><\/tr>'
+                + '<tr><td>translationalPIDF<\/td><td><code>1<\/code><\/td><td>Translational correction &mdash; set by TranslationalTuner.<\/td><\/tr>'
+                + '<tr><td>headingPIDF<\/td><td><code>1<\/code><\/td><td>Heading correction &mdash; set by HeadingTuner.<\/td><\/tr>'
+                + '<\/tbody><\/table><\/div><\/div>'
+
+                /* ── TUNING ── */
+                + '<div class="dpanel" id="dp-tuning">'
+                + '<p class="dey">\/\/ Calibration<\/p><h1 class="dh1">Tuning <span>Pedro Pathing<\/span><\/h1>'
+                + '<p class="dlead">Pedro must be tuned to your robot before paths work accurately. Follow these steps in order &mdash; skipping steps leads to unpredictable behavior.<\/p>'
+                + '<h2 class="dh2">Step 1 &mdash; Setup<\/h2><p class="dp">Set drivetrain constants and configure localizer hardware names and offsets in the <code>Constants<\/code> file before running any tuners.<\/p>'
+                + '<h2 class="dh2">Step 2 &mdash; Localization<\/h2><p class="dp">Supported localizers:<\/p>'
+                + '<ul class="dul"><li><strong>Three-Wheel Odometry<\/strong> &mdash; highest accuracy, recommended<\/li><li><strong>Two-Wheel Odometry<\/strong> &mdash; uses IMU for heading<\/li><li><strong>goBILDA Pinpoint<\/strong> &mdash; plug-and-play external localizer<\/li><li><strong>SparkFun OTOS<\/strong> &mdash; optical tracking sensor<\/li><li><strong>Drive Motor Encoders<\/strong> &mdash; no extra hardware, lowest accuracy<\/li><\/ul>'
+                + '<h2 class="dh2">Step 3 &mdash; Velocity Tuners<\/h2><p class="dp">Run <strong>ForwardVelocityTuner<\/strong> and <strong>StrafeVelocityTuner<\/strong> to auto-determine max forward and lateral velocities.<\/p>'
+                + '<div class="dnote"><strong>Space needed:<\/strong> Give your robot at least 100 inches of clear field &mdash; it drives at full power.<\/div>'
+                + '<h2 class="dh2">Step 4 &mdash; Heading Tuner<\/h2><p class="dp">Run <strong>HeadingTuner<\/strong>. The robot spins in place while you adjust the P value in FTC Dashboard until oscillation stops.<\/p>'
+                + '<h2 class="dh2">Step 5 &mdash; Drive Algorithm<\/h2>'
+                + '<div class="dsgrid"><div class="dscard"><div class="dscard-t">\ud83d\udd2e Predictive Braking (New)<\/div><p class="dp" style="margin:0;font-size:.92rem">Auto-tunes in minutes. Run <strong>PredictiveBrakingTuner<\/strong> then set a P value.<\/p><\/div>'
+                + '<div class="dscard"><div class="dscard-t">\u2699\ufe0f Manual PIDFs<\/div><p class="dp" style="margin:0;font-size:.92rem">More control. Run ZeroPowerAccel, then PIDF, then Centripetal tuners in order.<\/p><\/div><\/div>'
+                + '<div class="dwarn"><strong>Order matters:<\/strong> Always tune localization \u2192 velocity \u2192 heading \u2192 drive algorithm.<\/div><\/div>'
+
+                /* ── BEZIER ── */
+                + '<div class="dpanel" id="dp-bezier">'
+                + '<p class="dey">\/\/ Reference<\/p><h1 class="dh1">Bezier <span>Curves<\/span><\/h1>'
+                + '<p class="dlead">B\u00e9zier curves are the primary paths Pedro follows &mdash; smooth, mathematically defined curves that can approximate any continuous path to arbitrary precision.<\/p>'
+                + '<div class="ddiag"><div class="ddiag-lbl">\/\/ BezierLine vs Quadratic vs Cubic<\/div>'
+                + '<svg width="100%" viewBox="0 0 600 175" xmlns="http:\/\/www.w3.org\/2000\/svg">'
+                + '<line x1="52" y1="138" x2="155" y2="46" stroke="#00c8ff" stroke-width="2.5"\/><circle cx="52" cy="138" r="5.5" fill="#00c8ff"\/><circle cx="155" cy="46" r="5.5" fill="#00c8ff"\/>'
+                + '<text x="103" y="162" fill="#4a7a9b" font-family="Share Tech Mono,monospace" font-size="9.5" text-anchor="middle">BezierLine<\/text>'
+                + '<text x="103" y="174" fill="#4a7a9b" font-family="Share Tech Mono,monospace" font-size="8.5" text-anchor="middle">2 points<\/text>'
+                + '<text x="42" y="152" fill="#00ffc3" font-family="Share Tech Mono,monospace" font-size="7.5">start<\/text><text x="140" y="40" fill="#00ffc3" font-family="Share Tech Mono,monospace" font-size="7.5">end<\/text>'
+                + '<path d="M 232,138 Q 298,16 364,138" stroke="#00c8ff" stroke-width="2.5" fill="none"\/>'
+                + '<line x1="232" y1="138" x2="298" y2="16" stroke="rgba(0,200,255,.3)" stroke-width="1" stroke-dasharray="4 3"\/><line x1="364" y1="138" x2="298" y2="16" stroke="rgba(0,200,255,.3)" stroke-width="1" stroke-dasharray="4 3"\/>'
+                + '<circle cx="232" cy="138" r="5.5" fill="#00c8ff"\/><circle cx="364" cy="138" r="5.5" fill="#00c8ff"\/><circle cx="298" cy="16" r="5" fill="#7b2fff"\/>'
+                + '<text x="298" y="162" fill="#4a7a9b" font-family="Share Tech Mono,monospace" font-size="9.5" text-anchor="middle">BezierCurve<\/text>'
+                + '<text x="298" y="174" fill="#4a7a9b" font-family="Share Tech Mono,monospace" font-size="8.5" text-anchor="middle">3 pts (1 ctrl)<\/text>'
+                + '<text x="290" y="11" fill="#c084fc" font-family="Share Tech Mono,monospace" font-size="7.5">ctrl<\/text>'
+                + '<path d="M 416,138 C 443,16 527,16 554,138" stroke="#00c8ff" stroke-width="2.5" fill="none"\/>'
+                + '<line x1="416" y1="138" x2="443" y2="16" stroke="rgba(0,200,255,.3)" stroke-width="1" stroke-dasharray="4 3"\/><line x1="554" y1="138" x2="527" y2="16" stroke="rgba(0,200,255,.3)" stroke-width="1" stroke-dasharray="4 3"\/>'
+                + '<circle cx="416" cy="138" r="5.5" fill="#00c8ff"\/><circle cx="554" cy="138" r="5.5" fill="#00c8ff"\/><circle cx="443" cy="16" r="5" fill="#7b2fff"\/><circle cx="527" cy="16" r="5" fill="#7b2fff"\/>'
+                + '<text x="485" y="162" fill="#4a7a9b" font-family="Share Tech Mono,monospace" font-size="9.5" text-anchor="middle">BezierCurve<\/text>'
+                + '<text x="485" y="174" fill="#4a7a9b" font-family="Share Tech Mono,monospace" font-size="8.5" text-anchor="middle">4 pts (2 ctrl)<\/text>'
+                + '<text x="432" y="11" fill="#c084fc" font-family="Share Tech Mono,monospace" font-size="7.5">ctrl1<\/text><text x="510" y="11" fill="#c084fc" font-family="Share Tech Mono,monospace" font-size="7.5">ctrl2<\/text>'
+                + '<\/svg><\/div>'
+                + '<h2 class="dh2">BezierLine<\/h2><p class="dp">Straight line between two points. The simplest path type.<\/p>'
+                + '<div class="dcode"><pre><span class="kw">new<\/span> <span class="ty">BezierLine<\/span>(startPose, endPose)<\/pre><\/div>'
+                + '<h2 class="dh2">BezierCurve<\/h2><p class="dp">Curved path. Control points pull the curve toward them without the path passing through them.<\/p>'
+                + '<div class="dcode"><pre><span class="cm">\/\/ Quadratic &mdash; one control point<\/span>\n<span class="kw">new<\/span> <span class="ty">BezierCurve<\/span>(startPose, controlPose, endPose)\n\n<span class="cm">\/\/ Cubic &mdash; two control points<\/span>\n<span class="kw">new<\/span> <span class="ty">BezierCurve<\/span>(startPose, ctrl1Pose, ctrl2Pose, endPose)<\/pre><\/div>'
+                + '<div class="dwarn"><strong>Caution:<\/strong> Avoid 3+ control points (excluding start\/end). Avoid collinear points in incorrect order (e.g. (10,10), (0,0), (20,20)) &mdash; these cause degenerate paths.<\/div>'
+                + '<h2 class="dh2">Lazy Generation<\/h2><p class="dp">Pass a <code>FuturePose<\/code> lambda to generate paths at runtime based on the robot\'s current position or camera readings:<\/p>'
+                + '<div class="dcode"><pre>.<span class="fn">addPath<\/span>(<span class="kw">new<\/span> <span class="ty">BezierCurve<\/span>(follower::<span class="fn">getPose<\/span>, <span class="kw">new<\/span> <span class="ty">Pose<\/span>(<span class="nu">10<\/span>, <span class="nu">10<\/span>)))<\/pre><\/div>'
+                + '<h2 class="dh2">t-Value Parameterization<\/h2><p class="dp">B\u00e9zier curves use a t-value where <code>t=0<\/code> is start and <code>t=1<\/code> is end. <em>Not arc-length parameterized<\/em> &mdash; t=0.5 is not necessarily the midpoint by distance.<\/p>'
+                + '<div class="dcode"><pre><span class="cm">\/\/ t-value &rarr; distance percentage<\/span>\ncurve.<span class="fn">getPathCompletion<\/span>(<span class="kw">double<\/span> t)\n\n<span class="cm">\/\/ Distance percentage &rarr; t-value<\/span>\ncurve.<span class="fn">getT<\/span>(<span class="kw">double<\/span> pathCompletion)\n\n<span class="cm">\/\/ Distance remaining (uses robot\'s closest point t-value)<\/span>\npath.<span class="fn">getDistanceRemaining<\/span>()<\/pre><\/div><\/div>'
+
+                /* ── PATH BUILDER ── */
+                + '<div class="dpanel" id="dp-pathbuilder">'
+                + '<p class="dey">\/\/ Reference<\/p><h1 class="dh1"><span>Path Builder<\/span><\/h1>'
+                + '<p class="dlead">The <code>PathBuilder<\/code> chains multiple paths into a single continuous motion &mdash; a <code>PathChain<\/code>. Each path can have its own heading interpolation, braking, and completion constraints.<\/p>'
+                + '<h2 class="dh2">Basic Usage<\/h2>'
+                + '<div class="dcode"><div class="dcode-lbl">ExampleAuto.java<\/div><pre>'
+                + '<span class="ty">PathChain<\/span> chain = follower.<span class="fn">pathBuilder<\/span>()\n'
+                + '    .<span class="fn">addPath<\/span>(<span class="kw">new<\/span> <span class="ty">BezierLine<\/span>(scorePose, pickup1Pose))\n'
+                + '    .<span class="fn">setLinearHeadingInterpolation<\/span>(\n        scorePose.<span class="fn">getHeading<\/span>(), pickup1Pose.<span class="fn">getHeading<\/span>())\n'
+                + '    .<span class="fn">addPath<\/span>(<span class="kw">new<\/span> <span class="ty">BezierLine<\/span>(pickup1Pose, scorePose))\n'
+                + '    .<span class="fn">setLinearHeadingInterpolation<\/span>(\n        pickup1Pose.<span class="fn">getHeading<\/span>(), scorePose.<span class="fn">getHeading<\/span>())\n'
+                + '    .<span class="fn">build<\/span>();\n\nfollower.<span class="fn">followPath<\/span>(chain);<\/pre><\/div>'
+                + '<h2 class="dh2">PathBuilder Methods<\/h2>'
+                + '<div class="dtw"><table class="dtbl"><thead><tr><th>Method<\/th><th>Description<\/th><\/tr><\/thead><tbody>'
+                + '<tr><td><code>addPath(path)<\/code><\/td><td>Add a BezierLine, BezierCurve, or Path to the chain<\/td><\/tr>'
+                + '<tr><td><code>setLinearHeadingInterpolation(s,e)<\/code><\/td><td>Turn from start to end heading linearly<\/td><\/tr>'
+                + '<tr><td><code>setConstantHeadingInterpolation(h)<\/code><\/td><td>Hold a fixed heading throughout the path<\/td><\/tr>'
+                + '<tr><td><code>setTangentHeadingInterpolation()<\/code><\/td><td>Face the direction of travel at all times<\/td><\/tr>'
+                + '<tr><td><code>setBrakingStrength(double)<\/code><\/td><td>Control deceleration (0.0&ndash;1.0)<\/td><\/tr>'
+                + '<tr><td><code>setTValueConstraint(double)<\/code><\/td><td>Set when path is considered complete (0.0&ndash;1.0)<\/td><\/tr>'
+                + '<tr><td><code>build()<\/code><\/td><td>Finalize and return the PathChain<\/td><\/tr>'
+                + '<\/tbody><\/table><\/div>'
+                + '<div class="dnote"><strong>All headings in radians.<\/strong> Use <code>Math.toRadians(degrees)<\/code> everywhere.<\/div>'
+                + '<h2 class="dh2">Holding End Position<\/h2>'
+                + '<div class="dcode"><pre><span class="cm">\/\/ Robot may drift at end of path<\/span>\nfollower.<span class="fn">followPath<\/span>(chain);\n\n<span class="cm">\/\/ Pedro actively holds end position via PID<\/span>\nfollower.<span class="fn">followPath<\/span>(chain, <span class="kw">true<\/span>);<\/pre><\/div>'
+                + '<h2 class="dh2">Global PathChain Interpolation<\/h2>'
+                + '<div class="dcode"><pre>chain.<span class="fn">setGlobalHeadingInterpolation<\/span>(\n    <span class="ty">HeadingInterpolator<\/span>.<span class="fn">linear<\/span>(startRad, endRad)\n);<\/pre><\/div><\/div>'
+
+                /* ── INTERPOLATION ── */
+                + '<div class="dpanel" id="dp-interp">'
+                + '<p class="dey">\/\/ Reference<\/p><h1 class="dh1">Heading <span>Interpolation<\/span><\/h1>'
+                + '<p class="dlead">Interpolation controls how the robot\'s <strong>heading (rotation)<\/strong> changes while following a path. Pedro supports five types &mdash; apply per-path or globally across a PathChain.<\/p>'
+                + '<div class="dwarn"><strong>All heading values must be in radians.<\/strong> Use <code>Math.toRadians(degrees)<\/code> everywhere.<\/div>'
+                + '<h2 class="dh2">Linear Heading<\/h2><p class="dp">Robot turns smoothly from start to end heading over the path. Optional <code>endTime<\/code> (0.0&ndash;1.0) controls when the turn finishes &mdash; <strong>~0.8<\/strong> works well for most paths.<\/p>'
+                + '<div class="dcode"><pre>.<span class="fn">setLinearHeadingInterpolation<\/span>(startH, endH, <span class="nu">0.8<\/span>)\n.<span class="fn">setLinearHeadingInterpolation<\/span>(startH, endH) <span class="cm">\/\/ endTime defaults to 1.0<\/span><\/pre><\/div>'
+                + '<h2 class="dh2">Constant Heading<\/h2><p class="dp">Robot holds a fixed heading throughout. Turns to target heading before starting if different.<\/p>'
+                + '<div class="dcode"><pre>.<span class="fn">setConstantHeadingInterpolation<\/span>(<span class="ty">Math<\/span>.<span class="fn">toRadians<\/span>(<span class="nu">90<\/span>))<\/pre><\/div>'
+                + '<h2 class="dh2">Tangent Heading<\/h2><p class="dp">Robot faces direction of travel (curve tangent) at all times. Great for intake-first paths.<\/p>'
+                + '<div class="dcode"><pre>.<span class="fn">setTangentHeadingInterpolation<\/span>()<\/pre><\/div>'
+                + '<h2 class="dh2">Facing Point<\/h2><p class="dp">Robot continuously rotates to face a specific field coordinate while following &mdash; useful for shooter or camera alignment.<\/p>'
+                + '<div class="dcode"><pre>PATH.<span class="fn">setHeadingInterpolation<\/span>(\n    <span class="ty">HeadingInterpolator<\/span>.<span class="fn">facingPoint<\/span>(<span class="nu">72<\/span>, <span class="nu">72<\/span>)\n)<\/pre><\/div>'
+                + '<h2 class="dh2">Piecewise<\/h2><p class="dp">Combine different interpolation types across segments, defined by t-value:<\/p>'
+                + '<div class="dcode"><pre>PATH.<span class="fn">setHeadingInterpolation<\/span>(\n    <span class="ty">HeadingInterpolator<\/span>.<span class="fn">piecewise<\/span>(\n        <span class="kw">new<\/span> <span class="ty">HeadingInterpolator<\/span>.PiecewiseNode(<span class="nu">0<\/span>, <span class="nu">0.3<\/span>,\n            <span class="ty">HeadingInterpolator<\/span>.<span class="fn">linear<\/span>(<span class="nu">0<\/span>, <span class="ty">Math<\/span>.<span class="fn">toRadians<\/span>(<span class="nu">180<\/span>))),\n        <span class="kw">new<\/span> <span class="ty">HeadingInterpolator<\/span>.PiecewiseNode(<span class="nu">0.3<\/span>, <span class="nu">0.6<\/span>,\n            <span class="ty">HeadingInterpolator<\/span>.<span class="fn">facingPoint<\/span>(<span class="nu">72<\/span>, <span class="nu">72<\/span>)),\n        <span class="kw">new<\/span> <span class="ty">HeadingInterpolator<\/span>.PiecewiseNode(<span class="nu">0.6<\/span>, <span class="nu">1.0<\/span>,\n            <span class="ty">HeadingInterpolator<\/span>.tangent)\n    )\n)<\/pre><\/div>'
+                + '<h2 class="dh2">Reversing<\/h2><p class="dp">Chain <code>.reversed()<\/code> on any interpolator &mdash; takes longer rotation route, drives backwards, or faces away from point.<\/p>'
+                + '<div class="dcode"><pre><span class="ty">HeadingInterpolator<\/span>.<span class="fn">linear<\/span>(s, e).<span class="fn">reversed<\/span>()\n<span class="ty">HeadingInterpolator<\/span>.tangent.<span class="fn">reversed<\/span>()<\/pre><\/div><\/div>'
+
+                /* ── EXAMPLE AUTO ── */
+                + '<div class="dpanel" id="dp-example">'
+                + '<p class="dey">\/\/ Examples<\/p><h1 class="dh1">Example <span>Autonomous<\/span><\/h1>'
+                + '<p class="dlead">Complete autonomous that scores a preload and completes three pick-and-score cycles. Shows path building, Ivy command scheduler, and the alternative finite state machine.<\/p>'
+                + '<h2 class="dh2">Step 1 &mdash; Imports<\/h2>'
+                + '<div class="dcode"><div class="dcode-lbl">ExampleAuto.java<\/div><pre>'
+                + '<span class="kw">import<\/span> com.pedropathing.follower.Follower;\n'
+                + '<span class="kw">import<\/span> com.pedropathing.geometry.BezierLine;\n'
+                + '<span class="kw">import<\/span> com.pedropathing.geometry.Pose;\n'
+                + '<span class="kw">import<\/span> com.pedropathing.ivy.Command;\n'
+                + '<span class="kw">import<\/span> com.pedropathing.ivy.Scheduler;\n'
+                + '<span class="kw">import<\/span> com.pedropathing.paths.PathChain;\n'
+                + '<span class="kw">import static<\/span> com.pedropathing.ivy.pedro.PedroCommands.*;\n'
+                + '<span class="kw">import static<\/span> com.pedropathing.ivy.groups.Groups.*;\n\n'
+                + '<span class="an">@Autonomous<\/span>(name = <span class="st">"Example Auto"<\/span>, group = <span class="st">"Examples"<\/span>)\n'
+                + '<span class="kw">public class<\/span> <span class="ty">ExampleAuto<\/span> <span class="kw">extends<\/span> <span class="ty">OpMode<\/span> {\n'
+                + '    <span class="kw">private<\/span> <span class="ty">Follower<\/span> follower;\n}'
+                + '<\/pre><\/div>'
+                + '<h2 class="dh2">Step 2 &mdash; Poses<\/h2>'
+                + '<div class="dcode"><pre>'
+                + '<span class="kw">private final<\/span> <span class="ty">Pose<\/span> startPose   = <span class="kw">new<\/span> <span class="ty">Pose<\/span>(<span class="nu">28.5<\/span>, <span class="nu">128<\/span>, <span class="ty">Math<\/span>.<span class="fn">toRadians<\/span>(<span class="nu">180<\/span>));\n'
+                + '<span class="kw">private final<\/span> <span class="ty">Pose<\/span> scorePose   = <span class="kw">new<\/span> <span class="ty">Pose<\/span>(<span class="nu">60<\/span>,   <span class="nu">85<\/span>,  <span class="ty">Math<\/span>.<span class="fn">toRadians<\/span>(<span class="nu">135<\/span>));\n'
+                + '<span class="kw">private final<\/span> <span class="ty">Pose<\/span> pickup1Pose = <span class="kw">new<\/span> <span class="ty">Pose<\/span>(<span class="nu">37<\/span>,   <span class="nu">121<\/span>, <span class="ty">Math<\/span>.<span class="fn">toRadians<\/span>(<span class="nu">0<\/span>));\n'
+                + '<span class="kw">private final<\/span> <span class="ty">Pose<\/span> pickup2Pose = <span class="kw">new<\/span> <span class="ty">Pose<\/span>(<span class="nu">43<\/span>,   <span class="nu">130<\/span>, <span class="ty">Math<\/span>.<span class="fn">toRadians<\/span>(<span class="nu">0<\/span>));\n'
+                + '<span class="kw">private final<\/span> <span class="ty">Pose<\/span> pickup3Pose = <span class="kw">new<\/span> <span class="ty">Pose<\/span>(<span class="nu">49<\/span>,   <span class="nu">135<\/span>, <span class="ty">Math<\/span>.<span class="fn">toRadians<\/span>(<span class="nu">0<\/span>));'
+                + '<\/pre><\/div>'
+                + '<h2 class="dh2">Step 3 &mdash; Build Paths<\/h2>'
+                + '<div class="dcode"><pre>'
+                + '<span class="kw">public void<\/span> <span class="fn">buildPaths<\/span>() {\n'
+                + '    scorePreload = <span class="kw">new<\/span> <span class="ty">Path<\/span>(<span class="kw">new<\/span> <span class="ty">BezierLine<\/span>(startPose, scorePose));\n'
+                + '    scorePreload.<span class="fn">setLinearHeadingInterpolation<\/span>(\n        startPose.<span class="fn">getHeading<\/span>(), scorePose.<span class="fn">getHeading<\/span>());\n\n'
+                + '    grabPickup1 = follower.<span class="fn">pathBuilder<\/span>()\n'
+                + '        .<span class="fn">addPath<\/span>(<span class="kw">new<\/span> <span class="ty">BezierLine<\/span>(scorePose, pickup1Pose))\n'
+                + '        .<span class="fn">setLinearHeadingInterpolation<\/span>(\n            scorePose.<span class="fn">getHeading<\/span>(), pickup1Pose.<span class="fn">getHeading<\/span>())\n'
+                + '        .<span class="fn">build<\/span>();\n    <span class="cm">\/\/ ...repeat for pickup2, pickup3<\/span>\n}'
+                + '<\/pre><\/div>'
+                + '<h2 class="dh2">Step 4 &mdash; Ivy Routine<\/h2>'
+                + '<div class="dcode"><pre>'
+                + '<span class="kw">public<\/span> <span class="ty">Command<\/span> <span class="fn">autoRoutine<\/span>() {\n'
+                + '    <span class="kw">return<\/span> <span class="fn">sequential<\/span>(\n'
+                + '        <span class="fn">follow<\/span>(follower, scorePreload),\n'
+                + '        <span class="cm">\/* Score Preload *\/<\/span>\n'
+                + '        <span class="fn">follow<\/span>(follower, grabPickup1, <span class="kw">true<\/span>),\n'
+                + '        <span class="cm">\/* Grab Sample *\/<\/span>\n'
+                + '        <span class="fn">follow<\/span>(follower, scorePickup1, <span class="kw">true<\/span>),\n'
+                + '        <span class="cm">\/* Score Sample *\/<\/span>\n'
+                + '        <span class="fn">follow<\/span>(follower, grabPickup2, <span class="kw">true<\/span>),\n'
+                + '        <span class="fn">follow<\/span>(follower, scorePickup2, <span class="kw">true<\/span>),\n'
+                + '        <span class="fn">follow<\/span>(follower, grabPickup3, <span class="kw">true<\/span>),\n'
+                + '        <span class="fn">follow<\/span>(follower, scorePickup3, <span class="kw">true<\/span>)\n'
+                + '    );\n}'
+                + '<\/pre><\/div>'
+                + '<h2 class="dh2">Step 5 &mdash; Init &amp; Loop<\/h2>'
+                + '<div class="dcode"><pre>'
+                + '<span class="an">@Override<\/span>\n<span class="kw">public void<\/span> <span class="fn">init<\/span>() {\n'
+                + '    <span class="ty">Scheduler<\/span>.<span class="fn">reset<\/span>();\n'
+                + '    follower = <span class="ty">Constants<\/span>.<span class="fn">createFollower<\/span>(hardwareMap);\n'
+                + '    <span class="fn">buildPaths<\/span>();\n'
+                + '    follower.<span class="fn">setStartingPose<\/span>(startPose);\n}\n\n'
+                + '<span class="an">@Override<\/span>\n<span class="kw">public void<\/span> <span class="fn">start<\/span>() { <span class="fn">schedule<\/span>(<span class="fn">autoRoutine<\/span>()); }\n\n'
+                + '<span class="an">@Override<\/span>\n<span class="kw">public void<\/span> <span class="fn">loop<\/span>() {\n'
+                + '    follower.<span class="fn">update<\/span>();\n'
+                + '    <span class="ty">Scheduler<\/span>.<span class="fn">execute<\/span>();\n'
+                + '    telemetry.<span class="fn">addData<\/span>(<span class="st">"x"<\/span>, follower.<span class="fn">getPose<\/span>().<span class="fn">getX<\/span>());\n'
+                + '    telemetry.<span class="fn">addData<\/span>(<span class="st">"y"<\/span>, follower.<span class="fn">getPose<\/span>().<span class="fn">getY<\/span>());\n'
+                + '    telemetry.<span class="fn">update<\/span>();\n}'
+                + '<\/pre><\/div>'
+                + '<h2 class="dh2">Alternative: Finite State Machine<\/h2>'
+                + '<div class="dcode"><pre>'
+                + '<span class="kw">public void<\/span> <span class="fn">autonomousPathUpdate<\/span>() {\n'
+                + '    <span class="kw">switch<\/span> (pathState) {\n'
+                + '        <span class="kw">case<\/span> <span class="nu">0<\/span>:\n'
+                + '            follower.<span class="fn">followPath<\/span>(scorePreload);\n'
+                + '            <span class="fn">setPathState<\/span>(<span class="nu">1<\/span>); <span class="kw">break<\/span>;\n'
+                + '        <span class="kw">case<\/span> <span class="nu">1<\/span>:\n'
+                + '            <span class="kw">if<\/span> (!follower.<span class="fn">isBusy<\/span>()) {\n'
+                + '                <span class="cm">\/* Score preload action *\/<\/span>\n'
+                + '                follower.<span class="fn">followPath<\/span>(grabPickup1, <span class="kw">true<\/span>);\n'
+                + '                <span class="fn">setPathState<\/span>(<span class="nu">2<\/span>);\n'
+                + '            } <span class="kw">break<\/span>;\n'
+                + '        <span class="cm">\/\/ ... continue for all states<\/span>\n    }\n}'
+                + '<\/pre><\/div>'
+                + '<div class="dnote"><strong>Tip:<\/strong> Add a timer fallback: <code>if (!follower.isBusy() || timer.seconds() &gt; 3) { ... }<\/code> so the robot never freezes.<\/div>'
+                + '<div class="dfooter">'
+                + '<a href="https:\/\/pedropathing.com\/docs\/pathing" target="_blank" class="dbtn dbtn-p">Full Pedro Docs &#8599;<\/a>'
+                + '<a href="https:\/\/discord.gg\/2GfC4qBP5s" target="_blank" class="dbtn dbtn-o">Pedro Discord<\/a>'
+                + '<\/div><\/div>'
+
+                + '<\/div><\/div>'
+                + '<script>'
+                + 'document.querySelectorAll(".dsb-btn").forEach(function(b){'
+                + '  b.addEventListener("click",function(){'
+                + '    document.querySelectorAll(".dsb-btn").forEach(function(x){x.classList.remove("act");});'
+                + '    document.querySelectorAll(".dpanel").forEach(function(x){x.classList.remove("act");});'
+                + '    b.classList.add("act");'
+                + '    var p=document.getElementById("dp-"+b.dataset.panel);'
+                + '    if(p){p.classList.add("act");document.querySelector(".dmain").scrollTop=0;}'
+                + '  });'
+                + '});'
+                + '<\/script><\/body><\/html>';
+        }
+
         const GUIDES = {
             'android-studio':  page('// Java &amp; Android Studio', 'Wireless ADB Setup',             G_ANDROID),
             'hardware-teleop': page('// Hardware &amp; TeleOp',    'Hardware Config &amp; TeleOp',    G_HARDWARE),
             'subsystems':      page('// Subsystem Architecture',   'Subsystem Architecture',           G_SUBSYSTEMS),
             'pid-statemachines': page('// PID &amp; State Machines','PID Control &amp; State Machines', G_PID),
-            'path-following':  page('// Path Following',           'Path Following with Pedro Pathing', G_PATH),
+            'path-following':  buildDocsPage(),
         };
 
         document.querySelectorAll('.tl-item-clickable').forEach(item => {
@@ -2762,6 +3247,19 @@ public void loop() {
             });
         });
     })();
+
+    /* ═══════════════════════════════════════════
+       DOCS PANEL NAVIGATION
+    ═══════════════════════════════════════════ */
+    document.querySelectorAll('.doc-nav-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+            document.querySelectorAll('.doc-nav-btn').forEach(b => b.classList.remove('active'));
+            document.querySelectorAll('.doc-panel').forEach(p => p.classList.remove('active'));
+            btn.classList.add('active');
+            const panel = document.getElementById('doc-' + btn.dataset.doc);
+            if (panel) panel.classList.add('active');
+        });
+    });
 
     /* ═══════════════════════════════════════════
        HERO COUNTDOWN — ✏️ COUNTDOWN TARGET
